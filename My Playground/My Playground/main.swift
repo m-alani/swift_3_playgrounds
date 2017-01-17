@@ -8,5 +8,8 @@
 
 import Foundation
 
-print("Hello, World!")
+var input:String?
 
+input = readLine()
+
+print(input ?? "No Input")
