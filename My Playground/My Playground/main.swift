@@ -9,10 +9,8 @@
 // Imports
 import Foundation
 
-// Declarations
+// Everything Else
 var input:String?
-
-// Implementations
 print("Please enter a test string: ")
 input = readLine()
 guard var input = input else {
