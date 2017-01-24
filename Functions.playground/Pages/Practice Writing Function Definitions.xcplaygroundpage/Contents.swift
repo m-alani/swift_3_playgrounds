@@ -48,27 +48,6 @@ placeFirstLetterLast("Mom")
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //: Example 2 - placeFirstLetterLast
 // TODO: Write placeFirstLetterLast function here.
 
