@@ -24,11 +24,12 @@ let stringToReverse = "Mutable or Immutable? That is the question."
 
 // Returns a String
 func reverse(_ string: String) -> String {
-    var reversedString = ""
-    for character in string.characters {
-        reversedString = "\(character)" + reversedString
-    }
-    return reversedString
+//    var reversedString = ""
+//    for character in string.characters {
+//        reversedString = "\(character)" + reversedString
+//    }
+//    return reversedString
+    return String(string.characters.reversed())
 }
 
 // Returns nothing, prints out a String
