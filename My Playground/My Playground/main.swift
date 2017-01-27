@@ -9,21 +9,20 @@
 // Imports
 import Foundation
 
-// Everything Else
 if let cases = Int(readLine() ?? "0") {
     var output = [String]()
     
     // Process Input
     for _ in 1...cases {
-        if let line = readLine() {
+        if let line: String = readLine() {
             var funny = true
-            let count = line.characters.count
+            let myString = line.utf16
+            let count = myString.count
             for offset in 0...(count/2) - 1 {
-                let myScalars = line.unicodeScalars
-                let firstFrontAscii = Int(myScalars[myScalars.index(myScalars.startIndex, offsetBy: offset)].value)
-                let secondFrontAscii = Int(myScalars[myScalars.index(myScalars.startIndex, offsetBy: offset+1)].value)
-                let firstBackAscii = Int(myScalars[myScalars.index(myScalars.startIndex, offsetBy: (count-1) - offset)].value)
-                let secondBackAscii = Int(myScalars[myScalars.index(myScalars.startIndex, offsetBy: (count-2) - offset)].value)
+                let firstFrontAscii = Int(myString[myString.index(myString.startIndex, offsetBy: offset)])
+                let secondFrontAscii = Int(myString[myString.index(myString.startIndex, offsetBy: offset+1)])
+                let firstBackAscii = Int(myString[myString.index(myString.startIndex, offsetBy: (count-1) - offset)])
+                let secondBackAscii = Int(myString[myString.index(myString.startIndex, offsetBy: (count-2) - offset)])
                     if (abs(firstFrontAscii - secondFrontAscii) != abs(firstBackAscii - secondBackAscii)) {
                     funny = false;
                     break
