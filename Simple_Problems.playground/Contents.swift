@@ -18,4 +18,19 @@ func shortNameFromName(name: String) -> String {
     return output
 }
 
-shortNameFromName(name: "Zöe")
+// shortNameFromName(name: "Zöe")
+
+func lyricsForName(lyricsTemplate: String, fullName: String) -> String {
+    var output = lyricsTemplate.replacingOccurrences(of: "<FULL_NAME>", with: fullName)
+    output = output.replacingOccurrences(of: "<SHORT_NAME>", with: shortNameFromName(name: fullName))
+    return output
+}
+
+// join an array of strings into a single template string:
+let bananaFanaTemplate = [
+    "<FULL_NAME>, <FULL_NAME>, Bo B<SHORT_NAME>",
+    "Banana Fana Fo F<SHORT_NAME>",
+    "Me My Mo M<SHORT_NAME>",
+    "<FULL_NAME>"].joined(separator: "\n")
+
+print(lyricsForName(lyricsTemplate: bananaFanaTemplate, fullName: "Anna"))
