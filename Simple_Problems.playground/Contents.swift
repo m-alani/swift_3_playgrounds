@@ -3,19 +3,19 @@ import Foundation
 func shortNameFromName(name: String) -> String {
     let input = name.lowercased()
     var output = ""
-    let vowels = "aouie".characters
-    var firstVowelFound = false
+    let consonants = "bcdfghjklmnpqrstvwxyz".characters
+    var firstNonConsonantFound = false
     for char in input.characters {
-        if (firstVowelFound) {
+        if (firstNonConsonantFound) {
             output.append(char)
         } else {
-            if (vowels.contains(char)) {
+            if (!consonants.contains(char)) {
                 output.append(char)
-                firstVowelFound = true
+                firstNonConsonantFound = true
             }
         }
     }
     return output
 }
 
-shortNameFromName(name: "Ally")
+shortNameFromName(name: "Zöe")
