@@ -6,29 +6,33 @@
 //  Copyright © 2017 Marwan Alani. All rights reserved.
 //
 
-// Imports
-import Foundation
+//import Foundation
 
-if let cases = Int(readLine() ?? "0") {
-    var output = [String]()
+if let cases: Int = Int(readLine() ?? "0") {
+    var output: [String] = [String]()
     
     // Process Input
     for _ in 1...cases {
-        if let line: String = readLine() {
-            var funny = true
-            let myString = line.utf16
-            let count = myString.count
-            for offset in 0...(count/2) - 1 {
-                let firstFrontAscii = Int(myString[myString.index(myString.startIndex, offsetBy: offset)])
-                let secondFrontAscii = Int(myString[myString.index(myString.startIndex, offsetBy: offset+1)])
-                let firstBackAscii = Int(myString[myString.index(myString.startIndex, offsetBy: (count-1) - offset)])
-                let secondBackAscii = Int(myString[myString.index(myString.startIndex, offsetBy: (count-2) - offset)])
-                    if (abs(firstFrontAscii - secondFrontAscii) != abs(firstBackAscii - secondBackAscii)) {
-                    funny = false;
-                    break
+        if let input: String = readLine() {
+            // Initializations
+            var line: String.CharacterView = input.characters
+            var deleteOperations: Int = 0
+            var charIndex: String.CharacterView.Index = line.startIndex
+            var previousChar: Character = line[charIndex]
+            charIndex = line.index(after: charIndex)
+            // Loop through the input line, starting at the second character
+            while (charIndex != line.endIndex) {
+                // Same character as before? Delete
+                if (line[charIndex] == previousChar) {
+                    line.remove(at: charIndex)
+                    deleteOperations += 1
+                } else {
+                    // Not the same? update the previous character variable, and move on
+                    previousChar = line[charIndex]
+                    charIndex = line.index(after: charIndex)
                 }
             }
-            output.append(funny ? "Funny" : "Not Funny")
+            output.append("\(deleteOperations)")
         }
     }
     
