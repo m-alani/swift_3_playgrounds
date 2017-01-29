@@ -26,7 +26,6 @@ func lyricsForName(lyricsTemplate: String, fullName: String) -> String {
     return output
 }
 
-// join an array of strings into a single template string:
 let bananaFanaTemplate = [
     "<FULL_NAME>, <FULL_NAME>, Bo B<SHORT_NAME>",
     "Banana Fana Fo F<SHORT_NAME>",
