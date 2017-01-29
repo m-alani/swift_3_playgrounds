@@ -20,7 +20,7 @@ if let input = readLine() {
     }
   }
   // Check for passing condition:
-  //   We can have 1 character at most with odd occurences
+  //   The input line can have 1 character at most with odd occurences
   let output = oddChars.count < 2 ? "YES" : "NO"
   
   // Print Output
