@@ -6,38 +6,26 @@
 //  Copyright © 2017 Marwan Alani. All rights reserved.
 //
 
-//import Foundation
+import Foundation
 
-if let cases: Int = Int(readLine() ?? "0") {
-    var output: [String] = [String]()
-    
-    // Process Input
-    for _ in 1...cases {
-        if let input: String = readLine() {
-            // Initializations
-            var line: String.CharacterView = input.characters
-            var deleteOperations: Int = 0
-            var charIndex: String.CharacterView.Index = line.startIndex
-            var previousChar: Character = line[charIndex]
-            charIndex = line.index(after: charIndex)
-            // Loop through the input line, starting at the second character
-            while (charIndex != line.endIndex) {
-                // Same character as before? Delete
-                if (line[charIndex] == previousChar) {
-                    line.remove(at: charIndex)
-                    deleteOperations += 1
-                } else {
-                    // Not the same? update the previous character variable, and move on
-                    previousChar = line[charIndex]
-                    charIndex = line.index(after: charIndex)
-                }
-            }
-            output.append("\(deleteOperations)")
-        }
+// Read Input
+if let input = readLine() {
+  var charCountSet: Set<Character> = Set()
+  let word = input.characters
+  // Process the input line one character at a time. Maintain a set of all characters with odd occurences in the input
+  for char in word {
+    if let exists = charCountSet.remove(char) {}
+    else {
+      charCountSet.insert(char)
     }
-    
-    // Print Output
-    for line in output {
-        print(line)
-    }
+  }
+  // Check for passing conditions: 
+  //   if the input length was even & we had even occurences of all characters
+  //    OR
+  //   if the input length was odd & we had even occurences of all characters except for one
+  if (word.count % 2 == 0 && charCountSet.count == 0) || (word.count % 2 == 1 && charCountSet.count == 1) {
+    print("YES")
+  } else {
+    print("NO")
+  }
 }
