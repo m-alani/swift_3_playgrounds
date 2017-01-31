@@ -14,7 +14,7 @@ if let input = readLine() {
   let word = input.characters
   // Process the input line one character at a time. Maintain a set of all characters with odd occurences in the input
   for char in word {
-    if let exists = oddChars.remove(char) {}
+    if let exists = oddChars.remove(char) { }
     else {
       oddChars.insert(char)
     }
