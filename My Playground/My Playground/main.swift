@@ -6,23 +6,28 @@
 //  Copyright © 2017 Marwan Alani. All rights reserved.
 //
 
-import Foundation
+// import Foundation
 
-// Read Input
-if let input = readLine() {
-  var oddChars: Set<Character> = Set()
-  let word = input.characters
-  // Process the input line one character at a time. Maintain a set of all characters with odd occurences in the input
-  for char in word {
-    if let exists = oddChars.remove(char) { }
-    else {
-      oddChars.insert(char)
+if let cases = Int(readLine() ?? "0") {
+  var output = [String]()
+  
+  // Process Input
+  for _ in 1...cases {
+    if let line: String = readLine() {
+      var operations = 0
+      let word = line.utf8
+      let count = word.count
+      for offset in 0...(count/2) - 1 {
+        let frontAscii = Int(word[word.index(word.startIndex, offsetBy: offset)])
+        let backAscii = Int(word[word.index(word.startIndex, offsetBy: (count-1) - offset)])
+        operations += abs(frontAscii - backAscii)
+      }
+      output.append("\(operations)")
     }
   }
-  // Check for passing condition:
-  //   The input line can have 1 character at most with odd occurences
-  let output = oddChars.count < 2 ? "YES" : "NO"
   
   // Print Output
-  print(output)
+  for line in output {
+    print(line)
+  }
 }
