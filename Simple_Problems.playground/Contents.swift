@@ -1,5 +1,37 @@
 import Foundation
 
+class Person {
+    var name: String
+    var apartment: Apartment?
+    
+    init(name input: String) {
+        self.name = input
+    }
+    
+    deinit {
+        print("\(self.name) is deallocating")
+    }
+}
+
+class Apartment {
+    var unit: String
+    var tenant: Person?
+    
+    init(unit input: String) {
+        self.unit = input
+    }
+    
+    deinit {
+        print("\(self.unit) is deallocating")
+    }
+}
+
+var john: Person? = Person(name: "John")
+
+john = nil
+
+/* ****** Functions for Udacity Course
+ 
 func shortNameFromName(name: String) -> String {
     let input = name.lowercased()
     var output = ""
@@ -33,3 +65,5 @@ let bananaFanaTemplate = [
     "<FULL_NAME>"].joined(separator: "\n")
 
 print(lyricsForName(lyricsTemplate: bananaFanaTemplate, fullName: "Anna"))
+ 
+ ************/
