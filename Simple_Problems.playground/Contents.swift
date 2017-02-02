@@ -15,7 +15,7 @@ class Person {
 
 class Apartment {
     var unit: String
-    var tenant: Person?
+    weak var tenant: Person?
     
     init(unit input: String) {
         self.unit = input
@@ -27,8 +27,16 @@ class Apartment {
 }
 
 var john: Person? = Person(name: "John")
+var a4: Apartment? = Apartment(unit: "A4")
 
+john?.apartment = a4
+a4?.tenant = john
+
+a4?.tenant?.name
 john = nil
+a4?.tenant?.name
+a4 = nil
+
 
 /* ****** Functions for Udacity Course
  
