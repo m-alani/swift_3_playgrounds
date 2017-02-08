@@ -38,7 +38,7 @@ a4?.tenant?.name
 a4 = nil
 
 
-/* ****** Functions for Udacity Course
+/* ****** Functions for Udacity Course - Swift for Developers
  
 func shortNameFromName(name: String) -> String {
     let input = name.lowercased()
