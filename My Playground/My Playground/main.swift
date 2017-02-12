@@ -8,25 +8,19 @@
 
 import Foundation
 
-// Read the string
-let s = readLine()!
+// Read n
+let n = Int(readLine() ?? "0")!
 
-// Split the input
-var intHours = Int(s.substring(with: s.startIndex..<s.index(s.startIndex, offsetBy: 2))) ?? 0
-var hours = String(s.substring(with: s.startIndex..<s.index(s.startIndex, offsetBy: 2))) ?? ""
-let minutes = String(s.substring(with: s.index(s.startIndex, offsetBy: 3)..<s.index(s.startIndex, offsetBy: 5))) ?? "00"
-let seconds = String(s.substring(with: s.index(s.startIndex, offsetBy: 6)..<s.index(s.startIndex, offsetBy: 8))) ?? "00"
+// Read the array
+var numbers = String((readLine() ?? "0")!).components(separatedBy: " ").map({Int($0) ?? 0}).sorted()
 
-// Check for AM/PM
-let isAM = (String(s.substring(with: s.index(s.startIndex, offsetBy: 8)..<s.index(s.startIndex, offsetBy: 10)))) == "PM"
-    ? false
-    : true
-
-if (intHours == 12) {
-    hours = isAM ? "00" : "12"
-} else {
-    hours = isAM ? hours : "\(intHours + 12)"
+// Process the output
+var numberOfCuts = numbers.count
+while numberOfCuts != 0 {
+    print(numberOfCuts)
+    let deletedNumber = numbers.removeFirst()
+    while numbers.first ?? deletedNumber + 1 == deletedNumber {
+        numbers.removeFirst()
+    }
+    numberOfCuts = numbers.count
 }
-
-// Print Output
-print("\(hours):\(minutes):\(seconds)")
