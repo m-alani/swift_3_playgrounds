@@ -8,35 +8,37 @@
 
 import Foundation
 
-// Definition of the generic Bubble Sort Algorithm function (optimized)
-func bubbleSort<T>(inputArray: [T], comparator:(T,T) -> Bool) -> [T] {
-    var outputArray = inputArray
-    var iterations = 0
-    var swaps = 0
-    if outputArray.count > 1 {
-        for mainIndex in 0...outputArray.count-2 {
-            var noSwapsOccured = true
-            for subIndex in 0...outputArray.count-mainIndex-2 {
-                if comparator(outputArray[subIndex], outputArray[subIndex+1]) {
-                    swap(&outputArray[subIndex], &outputArray[subIndex+1])
-                    swaps += 1
-                    noSwapsOccured = false
-                }
-            }
-            iterations += 1
-            // Check if the array is already sorted
-            if noSwapsOccured {
-                break
-            }
-        }
+// Definition of the generic Merge helper function
+func merge<T>(arr1: inout [T], arr2: inout [T], compare: (T,T) -> Bool) -> [T] {
+    var output = [T]()
+    while (arr1.count != 0 && arr2.count != 0) {
+        output.append(compare(arr1[0], arr2[0]) ? arr1.removeFirst() : arr2.removeFirst())
     }
-    print("Bubble Sort completed after \(swaps) swap(s) thourgh \(iterations) iteration(s)")
-    return outputArray
+    while (arr1.count != 0) {
+        output.append(arr1.removeFirst())
+    }
+    while (arr2.count != 0) {
+        output.append(arr2.removeFirst())
+    }
+    return output
+}
+
+// Definition of the generic Merge Sort (recursive) Algorithm function
+func mergeSort<T>(inputArray: [T], comparator:(T,T) -> Bool) -> [T] {
+    if inputArray.count == 1 {
+        return inputArray
+    } else {
+        var subArray1 = Array(inputArray[0...(inputArray.count-1)/2])
+        var subArray2 = Array(inputArray[(inputArray.count-1)/2 + 1...inputArray.count-1])
+        subArray1 = mergeSort(inputArray: subArray1, comparator: comparator)
+        subArray2 = mergeSort(inputArray: subArray2, comparator: comparator)
+        return merge(arr1: &subArray1, arr2: &subArray2, compare: comparator)
+    }
 }
 
 // Definition of generic comparator functions
-func ascending<T: Comparable> (firstItem: T, secondItem: T) -> Bool {return firstItem > secondItem}
-func descending<T: Comparable> (firstItem: T, secondItem: T) -> Bool {return firstItem < secondItem}
+func descending<T: Comparable> (firstItem: T, secondItem: T) -> Bool {return firstItem > secondItem}
+func ascending<T: Comparable> (firstItem: T, secondItem: T) -> Bool {return firstItem < secondItem}
 
 // Set the size of the test array (and the upper bound of the random numbers to fill it: 1 to N)
 let N: UInt32 = 20
@@ -46,7 +48,7 @@ var unsortedArray = (1...N).map{_ in Int(arc4random_uniform(N)+1)}
 print(unsortedArray)
 
 // Sort the array without mutating it (change the comparator function to control the order of the sort)
-let sortedArray = bubbleSort(inputArray: unsortedArray, comparator: ascending)
+let sortedArray = mergeSort(inputArray: unsortedArray, comparator: ascending)
 
 // Print the sorted array
 print(sortedArray)
