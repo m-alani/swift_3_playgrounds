@@ -8,32 +8,43 @@
 
 import Foundation
 
-// Definition of the generic Merge helper function
-func merge<T>(arr1: inout [T], arr2: inout [T], compare: (T,T) -> Bool) -> [T] {
-    var output = [T]()
-    while (arr1.count != 0 && arr2.count != 0) {
-        output.append(compare(arr1[0], arr2[0]) ? arr1.removeFirst() : arr2.removeFirst())
+// Partitioning function to partition values around the pivot
+func partition<T: Comparable>(array: inout [T], low: Int, high: Int, pivot: T) -> Int {
+    var left = low
+    var right = high
+    while (left <= right) {
+        while (ascending(firstItem: array[left], secondItem: pivot)) {
+            left += 1
+        }
+        while (ascending(firstItem: pivot, secondItem: array[right])) {
+            right -= 1
+        }
+        if (left <= right) {
+            if (left != right) {
+                swap(&array[left], &array[right])
+            }
+            left += 1
+            right -= 1
+        }
     }
-    while (arr1.count != 0) {
-        output.append(arr1.removeFirst())
-    }
-    while (arr2.count != 0) {
-        output.append(arr2.removeFirst())
-    }
-    return output
+    return left
 }
 
-// Definition of the generic Merge Sort (recursive) Algorithm function
-func mergeSort<T>(inputArray: [T], comparator:(T,T) -> Bool) -> [T] {
-    if inputArray.count == 1 {
-        return inputArray
-    } else {
-        var subArray1 = Array(inputArray[0...(inputArray.count-1)/2])
-        var subArray2 = Array(inputArray[(inputArray.count-1)/2 + 1...inputArray.count-1])
-        subArray1 = mergeSort(inputArray: subArray1, comparator: comparator)
-        subArray2 = mergeSort(inputArray: subArray2, comparator: comparator)
-        return merge(arr1: &subArray1, arr2: &subArray2, compare: comparator)
+// Recursive implementation of the Quick Sort Algorithm
+func quickSort<T: Comparable>(array: inout [T], low: Int, high: Int) {
+    if (low < high) {
+        let pivot = array[(low + high)/2]
+        let p_index = partition(array: &array, low: low, high: high, pivot: pivot)
+        quickSort(array: &array, low: low, high: p_index-1)
+        quickSort(array: &array, low: p_index, high: high)
     }
+}
+
+// Wrapper function to create a copy of the unsorted array and then apply Quick Sort on the copy and return it.
+func quickSort<T: Comparable>(input: [T]) -> [T] {
+    var output = input
+    quickSort(array: &output, low: 0, high: output.count-1)
+    return output
 }
 
 // Definition of generic comparator functions
@@ -47,8 +58,8 @@ let N: UInt32 = 20
 var unsortedArray = (1...N).map{_ in Int(arc4random_uniform(N)+1)}
 print(unsortedArray)
 
-// Sort the array without mutating it (change the comparator function to control the order of the sort)
-let sortedArray = mergeSort(inputArray: unsortedArray, comparator: ascending)
+// Sort the array without mutating it
+let sortedArray = quickSort(input: unsortedArray)
 
 // Print the sorted array
 print(sortedArray)
