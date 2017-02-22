@@ -37,6 +37,7 @@ class Node<T> {
 /// Generic Singly Linked List implementation
 class LinkedList<T> {
     
+    /// The root node of the list
     private var root: Node<T>?
     
     /// The number of nodes/values in the list.
@@ -53,7 +54,6 @@ class LinkedList<T> {
     init(root r: Node<T>) {
         self.root = r
     }
-    
     
     /// Create a string representation of the list
     ///
@@ -73,14 +73,12 @@ class LinkedList<T> {
         return tempString
     }
     
-    
-    /// Check if the list is empty or not
+    /// Check if the list is empty
     ///
     /// - Returns: A boolean value to indicate whether the list is empty.
     public func isEmpty() -> Bool {
         return self.count == 0
     }
-    
     
     /// Inserts a value at the beginning of the list. O(1)
     ///
@@ -91,7 +89,6 @@ class LinkedList<T> {
         self.count += 1
     }
     
-    
     /// Inserts a node at the beginning of the list. O(1)
     ///
     /// - Parameter node: The node to be inserted
@@ -101,8 +98,7 @@ class LinkedList<T> {
         self.count += 1
     }
     
-    
-    /// Removes the first node in the list and returns its value. If the list is empty, it returns a nil.
+    /// Removes the first node in the list and returns its value. If the list is empty, it returns a nil. O(1)
     ///
     /// - Returns: An optional T. The data of the removed node (if any), or nil otherwise
     public func removeFirst() -> T? {
@@ -114,7 +110,6 @@ class LinkedList<T> {
         }
         return removedValue
     }
-    
     
     /// Inserts a value at the end of the list. O(n)
     ///
@@ -149,13 +144,70 @@ class LinkedList<T> {
             self.count += 1
         }
     }
+    
+    /// Removes the last node in the list and returns its value. If the list is empty, it returns a nil. O(n)
+    ///
+    /// - Returns: An optional T. The data of the removed node (if any), or nil otherwise
+    public func removeLast() -> T? {
+        var removedValue: T? = nil
+        if (self.count == 1) {
+            removedValue = self.root!.data
+            self.root = nil
+            self.count -= 1
+        } else if (self.count > 1) {
+            var previousNode = self.root
+            while (previousNode!.next!.next != nil) {
+                previousNode = previousNode!.next
+            }
+            removedValue = previousNode!.next!.data
+            previousNode!.next = nil
+            self.count -= 1
+        }
+        return removedValue
+    }
+    
+    /// Create an Array from the contents of the list. O(n)
+    ///
+    /// - Returns: An array of type T containing the elements of the list in the same order
+    public func toArray() -> [T] {
+        var array = [T]()
+        var currentNode = self.root
+        while (currentNode != nil) {
+            array.append(currentNode!.data)
+            currentNode = currentNode!.next
+        }
+        return array
+    }
 }
 
 //************ Linked List Class Ends ************//
 
+//************ Main Program (for testing) Begins ************//
 
-let test = LinkedList<Int>()
-test.insertFirst(data: 2)
-test.insertFirst(data: 1)
+// Create an empty list
+let myList = LinkedList<Int>()
 
-print(test.toString())
+// Set N to the desired number of test elements. Default is 20
+let N: UInt32 = 20
+
+// Populate the list with random numbers (half to the front, half to the back)
+for _ in 0...N/2 {
+    myList.insertFirst(data: Int(arc4random_uniform(N)+1))
+}
+for _ in 0...N/2 {
+    myList.insertLast(data: Int(arc4random_uniform(N)+1))
+}
+
+// Print the list
+print("Initial List:")
+print(myList.toString(),"\n")
+
+// Use each remove function once
+print("Removeing the first element: \(myList.removeFirst())")
+print("Removeing the last element: \(myList.removeLast())\n")
+
+// Printing the list as an array
+print("The list as an array:")
+print(myList.toArray())
+
+//************ Main Program (for testing) Ends ************//
