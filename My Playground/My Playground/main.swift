@@ -191,15 +191,15 @@ let myList = LinkedList<Int>()
 let N: UInt32 = 20
 
 // Populate the list with random numbers (half to the front, half to the back)
-for _ in 0...N/2 {
+for _ in 1...N/2 {
     myList.insertFirst(data: Int(arc4random_uniform(N)+1))
 }
-for _ in 0...N/2 {
+for _ in 1...N/2 {
     myList.insertLast(data: Int(arc4random_uniform(N)+1))
 }
 
 // Print the list
-print("Initial List:")
+print("Initial List with \(myList.count) item(s):")
 print(myList.toString(),"\n")
 
 // Use each remove function once
@@ -207,7 +207,7 @@ print("Removeing the first element: \(myList.removeFirst())")
 print("Removeing the last element: \(myList.removeLast())\n")
 
 // Printing the list as an array
-print("The list as an array:")
+print("The list as an array of \(myList.count) item(s):")
 print(myList.toArray())
 
 //************ Main Program (for testing) Ends ************//
