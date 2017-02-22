@@ -8,6 +8,8 @@
 
 import Foundation
 
+//************ Node Class Begins ************//
+
 /// Base Node class to be used in a Linked List
 class Node<T> {
     
@@ -27,6 +29,10 @@ class Node<T> {
         self.next = nextNode
     }
 }
+
+//************ Node Class Ends ************//
+
+//************ Linked List Class Begins ************//
 
 /// Generic Singly Linked List implementation
 class LinkedList<T> {
@@ -82,6 +88,7 @@ class LinkedList<T> {
     public func insertFirst(data: T) {
         let newNode = Node(data: data, nextNode: self.root)
         self.root = newNode
+        self.count += 1
     }
     
     
@@ -91,6 +98,7 @@ class LinkedList<T> {
     public func insertFirst(node: Node<T>) {
         node.next = self.root
         self.root = node
+        self.count += 1
     }
     
     
@@ -99,9 +107,10 @@ class LinkedList<T> {
     /// - Returns: An optional T. The data of the removed node (if any), or nil otherwise
     public func removeFirst() -> T? {
         var removedValue: T? = nil
-        if (!self.isEmpty()) {
+        if (self.count != 0) {
             removedValue = root?.data
             self.root = self.root!.next
+            self.count -= 1
         }
         return removedValue
     }
@@ -123,8 +132,26 @@ class LinkedList<T> {
             self.count += 1
         }
     }
+    
+    /// Inserts a node at the end of the list. O(n)
+    ///
+    /// - Parameter node: The node to be inserted
+    public func insertLast(node: Node<T>) {
+        if (self.count == 0) {
+            self.root = node
+            self.count += 1
+        } else {
+            var currentNode = self.root
+            while (currentNode!.next != nil) {
+                currentNode = currentNode!.next
+            }
+            currentNode!.next = node
+            self.count += 1
+        }
+    }
 }
 
+//************ Linked List Class Ends ************//
 
 
 let test = LinkedList<Int>()
