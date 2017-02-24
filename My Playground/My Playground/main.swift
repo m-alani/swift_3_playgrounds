@@ -10,7 +10,7 @@ import Foundation
 
 //************ Node Class Begins ************//
 
-/// Base Node class to be used in a Stack
+/// Base Node class to be used in a Queue
 class Node<T> {
     
     /// The variable to hold the data part of the node
@@ -32,84 +32,95 @@ class Node<T> {
 
 //************ Node Class Ends ************//
 
-//************ Stack Class Begins ************//
+//************ Queue Class Begins ************//
 
-/// Generic Stack implementation
-class Stack<T> {
+/// Generic Queue implementation
+class Queue<T> {
     
-    /// The top node of the list
-    private var top: Node<T>?
+    /// The front node of the queue
+    private var front: Node<T>?
     
-    /// Default initializer with empty stack
+    /// The last (back) node of the queue
+    private var back: Node<T>?
+    
+    /// Default initializer with empty queue
     init() {
-        self.top = nil
+        self.front = nil
+        self.back = nil
     }
     
-    /// Overloaded initializer to create a stack with 1 node
+    /// Overloaded initializer to create a queue with 1 node
     /// Note that the "node" is passed by reference, hence we copy its data to a new node first
     ///
-    /// - Parameter top: Set the top of the stack as the passed parameter
-    init(top: Node<T>) {
-        let nodeCopy = Node(data: top.data)
-        self.top = nodeCopy
+    /// - Parameter top: Set the front of the queue as the passed parameter
+    init(front: Node<T>) {
+        let nodeCopy = Node(data: front.data)
+        self.front = nodeCopy
+        self.back = nodeCopy
     }
     
-    /// Check if the stack is empty
+    /// Check if the queue is empty
     ///
-    /// - Returns: A boolean value to indicate whether the stack is empty.
+    /// - Returns: A boolean value to indicate whether the queue is empty.
     public func isEmpty() -> Bool {
-        return self.top == nil
+        return self.front == nil
     }
     
-    /// Inserts a value at the top of the stack. O(1)
+    /// Inserts a value at the back of the queue. O(1)
     ///
     /// - Parameter data: The data value to be inserted
-    public func push(data: T) {
-        let newNode = Node(data: data, nextNode: self.top)
-        self.top = newNode
+    public func enqueue(data: T) {
+        if (self.isEmpty()) {
+            let newNode = Node(data: data)
+            self.front = newNode
+            self.back = newNode
+        } else {
+            let newNode = Node(data: data)
+            self.back?.next = newNode
+            self.back = newNode
+        }
     }
     
-    /// Inserts a node at the top of the stack. O(1)
+    /// Inserts a node at the back of the queue. O(1)
     /// Note that the "node" is passed by reference, hence we copy its data to a new node first
     ///
     /// - Parameter node: The node to be inserted
-    public func push(node: Node<T>) {
+    public func enqueue(node: Node<T>) {
         let nodeCopy = Node(data: node.data)
-        nodeCopy.next = self.top
-        self.top = nodeCopy
+        self.back?.next = nodeCopy
     }
     
     
-    /// Removes the top node in the stack and returns its value. If the stack is empty, it returns a nil. O(1)
+    /// Removes the front node in the queue and returns its value. If the queue is empty, it returns a nil. O(1)
     ///
     /// - Returns: An optional T. The data of the removed node (if any), or nil otherwise
-    public func pop() -> T? {
+    public func dequeue() -> T? {
         var removedValue: T? = nil
-        if (self.top != nil) {
-            removedValue = self.top?.data
-            self.top = self.top!.next
+        if (!self.isEmpty()) {
+            removedValue = self.front?.data
+            self.front = self.front?.next
         }
         return removedValue
     }
 
     
-    /// Returns the top data value in the stack (if any) without deleting the node. O(1)
+    /// Returns the front data value in the queue (if any) without deleting the node. O(1)
     ///
-    /// - Returns: The optional data value of the first node in the stack. Returns nil if the stack is empty
+    /// - Returns: The optional data value of the first node in the queue. Returns nil if the queue is empty
     public func peek() -> T? {
         var value: T? = nil
-        if (self.top != nil) {
-            value = self.top!.data
+        if (!self.isEmpty()) {
+            value = self.front?.data
         }
         return value
     }
     
-    /// Create an Array from the contents of the stack. O(n)
+    /// Create an Array from the contents of the queue. O(n)
     ///
-    /// - Returns: An array of type T containing the elements of the list in the same order
+    /// - Returns: An array of type T containing the elements of the queue in the same order
     public func toArray() -> [T] {
         var array = [T]()
-        var currentNode = self.top
+        var currentNode = self.front
         while (currentNode != nil) {
             array.append(currentNode!.data)
             currentNode = currentNode!.next
@@ -118,32 +129,37 @@ class Stack<T> {
     }
 }
 
-//************ Stack Class Ends ************//
+//************ Queue Class Ends ************//
 
 //************ Main Program (for testing) Begins ************//
 
-// Create an empty list
-let myStack = Stack<Int>()
+// Create an empty queue
+let myQueue = Queue<Int>()
 
 // Set N to the desired number of test elements. Default is 20
 let N: UInt32 = 20
 
 // Populate the stack with random numbers
-print("Pushing \(N) random number(s) into the Stack...\n")
+print("Enqueue \(N) random number(s) into the Queue...\n")
 for _ in 1...N {
-    myStack.push(data: Int(arc4random_uniform(N)+1))
+    myQueue.enqueue(data: Int(arc4random_uniform(N)+1))
 }
 
-// Print the stack as an Array
-print("Printing the Stack as an Array:")
-print(myStack.toArray(),"\n")
+// Print the queue as an Array
+print("Printing the Queue as an Array:")
+print(myQueue.toArray(),"\n")
 
-// Remove the first 3 values
-print("Popping the top element: \(myStack.pop()!)")
-print("Popping the top element: \(myStack.pop()!)")
-print("Popping the top element: \(myStack.pop()!)\n")
+// Remove the first 2 values, then add a random number
+print("Dequeue the front element: \(myQueue.dequeue()!)")
+print("Dequeue the front element: \(myQueue.dequeue()!)")
+print("Enqueue a random element...\n")
+myQueue.enqueue(data: Int(arc4random_uniform(N)+1))
 
-// Peek at the current top
-print("Peeking into the top element of the Stack: \(myStack.peek()!)\n")
+// Print the queue as an Array
+print("Printing the updated Queue as an Array:")
+print(myQueue.toArray(),"\n")
+
+// Peek at the current front
+print("Peeking into the front element of the Queue: \(myQueue.peek()!)\n")
 
 //************ Main Program (for testing) Ends ************//
