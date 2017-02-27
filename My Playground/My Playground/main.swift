@@ -8,35 +8,25 @@
 
 import Foundation
 
-// In our case, N & M doesn't matter, as we're reading the input in 1 line always.
-var unusedInput = readLine()
-// Read the first list into an array of strings (Swift readline() limitation)
+// Read N & K as Strings
 var inputString = String(readLine() ?? "")!.components(separatedBy: " ")
-// Convert the strings into an array of integers
-var listA = inputString.map({Int($0) ?? 0})
+// Convert the strings into integers
+let inputInt: [Int] = inputString.map({Int($0) ?? 0})
+let N = inputInt[0]
+let K = inputInt[1]
 
-// Read the second list into an array of strings (Swift readline() limitation)
-unusedInput = readLine()
+// Read the N integers as String
 inputString = String(readLine() ?? "")!.components(separatedBy: " ")
-// Convert the strings into an array of integers
-let listB = inputString.map({Int($0) ?? 0})
+// Convert the strings into integers
+let input = Set(inputString.map({Int($0) ?? 0}))
 
-// Process the lists and create an output array for the missing numbers
-var output = [Int]()
-for number in listB {
-    if let index = listA.index(of: number) {
-        listA.remove(at: index)
-    } else {
-        output.append(number)
+// Process the input
+var output = 0
+for number in input {
+    if input.contains(number - K) {
+        output += 1
     }
 }
 
-// Sort then print the output
-if output.count > 0 {
-    output.sort()
-    print(output[0], separator: "", terminator: "")
-    for index in 1..<output.count {
-        print(" \(output[index])", separator: "", terminator: "")
-    }
-    print()
-}
+// Print the output
+print(output)
