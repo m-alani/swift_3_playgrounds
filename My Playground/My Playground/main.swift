@@ -8,25 +8,26 @@
 
 import Foundation
 
-// Read N & K as Strings
-var inputString = String(readLine() ?? "")!.components(separatedBy: " ")
-// Convert the strings into integers
-let inputInt: [Int] = inputString.map({Int($0) ?? 0})
-let N = inputInt[0]
-let K = inputInt[1]
-
-// Read the N integers as String
-inputString = String(readLine() ?? "")!.components(separatedBy: " ")
-// Convert the strings into integers
-let input = Set(inputString.map({Int($0) ?? 0}))
-
-// Process the input
-var output = 0
-for number in input {
-    if input.contains(number - K) {
-        output += 1
+if let cases = Int(readLine() ?? "0") {
+    var output = [String]()
+    
+    // Process Input
+    for _ in 1...cases {
+        if let line: String = readLine() {
+            var operations = 0
+            let word = line.utf8
+            let count = word.count
+            for offset in 0...(count/2) - 1 {
+                let frontAscii = Int(word[word.index(word.startIndex, offsetBy: offset)])
+                let backAscii = Int(word[word.index(word.startIndex, offsetBy: (count-1) - offset)])
+                operations += abs(frontAscii - backAscii)
+            }
+            output.append("\(operations)")
+        }
+    }
+    
+    // Print Output
+    for line in output {
+        print(line)
     }
 }
-
-// Print the output
-print(output)
