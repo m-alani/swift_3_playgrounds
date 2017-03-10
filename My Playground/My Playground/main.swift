@@ -9,25 +9,23 @@
 import Foundation
 
 if let cases = Int(readLine() ?? "0") {
-    var output = [String]()
-    
-    // Process Input
-    for _ in 1...cases {
+  //var output = [String]()
+  
+  // Process Input
+  for _ in 1...cases {
+    if let dimensions: String = readLine() {
+      let rows = Int(dimensions.components(separatedBy: " ")[0])!
+      let columns = Int(dimensions.components(separatedBy: " ")[1])!
+      var input = [[Int]]()
+        
+      for row in 0..<rows {
         if let line: String = readLine() {
-            var operations = 0
-            let word = line.utf8
-            let count = word.count
-            for offset in 0...(count/2) - 1 {
-                let frontAscii = Int(word[word.index(word.startIndex, offsetBy: offset)])
-                let backAscii = Int(word[word.index(word.startIndex, offsetBy: (count-1) - offset)])
-                operations += abs(frontAscii - backAscii)
-            }
-            output.append("\(operations)")
+          input.append(line.utf8.map({Int($0) - 48;}))
         }
+      }
+      
+      print(input)
     }
-    
-    // Print Output
-    for line in output {
-        print(line)
-    }
+  }
+  
 }
