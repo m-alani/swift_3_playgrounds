@@ -8,63 +8,65 @@
 
 import Foundation
 
-// Helper function to check if a matrix is contained in another matrix at specific coordenates
-func does(thisMatrix main: [[Int]], containThisOne sub: [[Int]], atThisRow x: Int, andColumn y: Int) -> Bool {
-  for checkX in 0..<sub.count {
-    for checkY in 0..<sub[checkX].count {
-      if sub[checkX][checkY] != main[checkX+x][checkY+y] {
-        return false
-      }
-    }
-  }
-  return true
+// Definition of a pole
+struct Pole {
+    let altitude: Int
+    let weight: Int
 }
 
+// Helper function to calculate the cost of creating a pile at an altitude
+func costOfPile(fromPoleIndex from: Int, atPoleIndex to: Int, forPoles poles: [Pole]) -> Int {
+    var cost = 0
+    var index = from + 1
+    while (index <= to) {
+        cost += (poles[index].altitude - poles[from].altitude) * poles[index].weight
+        index += 1
+    }
+    return cost
+}
 
-if let cases = Int(readLine() ?? "0") {
-  var output = [String]()
-  
-  // Process Input
-  for _ in 1...cases {
-      
-    // Read the case's input matrix
-    var dimensions = String(readLine()!)!
-    var rows = Int(dimensions.components(separatedBy: " ")[0])!
-    var columns = Int(dimensions.components(separatedBy: " ")[1])!
-    var input = [[Int]]()
-    for row in 0..<rows {
-      if let line: String = readLine() {
-        input.append(line.utf8.map({Int($0) - 48;}))
-      }
-    }
-    
-    // Read the case's smaller matrix to find
-    dimensions = String(readLine()!)!
-    rows = Int(dimensions.components(separatedBy: " ")[0])!
-    columns = Int(dimensions.components(separatedBy: " ")[1])!
-    var search = [[Int]]()
-    for row in 0..<rows {
-      if let line: String = readLine() {
-        search.append(line.utf8.map({Int($0) - 48;}))
-      }
-    }
-    
-    // Process this case
-    var found = "NO"
-    mainLoop: for x in 0...input.count-search.count {
-      for y in 0...input[x].count-search[0].count {
-        if does(thisMatrix: input, containThisOne: search, atThisRow: x, andColumn: y) {
-          found = "YES"
-          break mainLoop
+// Helper function to find the next pile location
+func findNextPile(fromPoleIndex from: Int, toPoleIndex to: Int, forPoles poles: [Pole]) -> Int {
+    var indexOfPile = from
+    var minimum = costOfPile(fromPoleIndex: from, atPoleIndex: to, forPoles: poles)
+    var index = from
+    while (index < to) {
+        let tempCost = costOfPile(fromPoleIndex: from, atPoleIndex: index, forPoles: poles) + costOfPile(fromPoleIndex: index+1, atPoleIndex: to, forPoles: poles)
+        if (tempCost < minimum) {
+            minimum = tempCost
+            indexOfPile = index + 1
         }
-      }
+        index += 1
     }
-    output.append(found)
-    
-  }
-  
-  // Print Output
-  for line in output {
-    print(line)
-  }
+    return indexOfPile
 }
+
+// Read n & k
+var inputLine = String(readLine()!)!
+let n = Int(inputLine.components(separatedBy: " ")[0])!
+var k = Int(inputLine.components(separatedBy: " ")[1])!
+
+// Read the input
+var poles = [Pole]()
+for _ in 0..<n {
+    inputLine = String(readLine()!)!
+    poles.append(Pole(altitude: Int(inputLine.components(separatedBy: " ")[0])!, weight: Int(inputLine.components(separatedBy: " ")[1])!))
+}
+
+// Find the index of each pile
+var pilesLocations = [0]
+k -= 1
+while (k > 0) {
+    pilesLocations.append(findNextPile(fromPoleIndex: pilesLocations[pilesLocations.count-1], toPoleIndex: poles.count-1, forPoles: poles))
+    k -= 1
+}
+
+// Calculate the output
+pilesLocations.append(poles.count)
+var output = 0
+for index in 0..<pilesLocations.count-1 {
+    output += costOfPile(fromPoleIndex: pilesLocations[index], atPoleIndex: pilesLocations[index+1]-1, forPoles: poles)
+}
+
+// Print the output
+print(output)
