@@ -8,28 +8,23 @@
 
 import Foundation
 
-// Read the input
-let inputLine = String(readLine()!)!
+// Read T
+let cases = Int(readLine()!)!
 
-// Prepare variables
-let input = Array(inputLine.characters)
-let length = input.count
-let outputLength = length + Int(Double(length).squareRoot())
-let rowLength = Int(ceil(Double(length).squareRoot()))
-var output = [Character]()
-var index = 0
-var column = 0
-
-// Generate the output as a Character array
-while (output.count < outputLength) {
-    output.append(input[index])
-    index += rowLength
-    if (index >= length) {
-        column += 1
-        index = column
-        output.append(" ")
+// Solve the cases one by one
+var output = [Int]()
+for _ in 1...cases {
+    let bwTarget = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+    var prices = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+    if (prices[0] + prices[2]) < prices[1] {
+        prices[1] = prices[0] + prices[2]
+    } else if (prices[1] + prices[2]) < prices[0] {
+        prices[0] = prices[1] + prices[2]
     }
+    output.append(prices[0]*bwTarget[0] + prices[1]*bwTarget[1])
 }
 
 // Print the output
-print(String(output))
+for caseResult in output {
+    print(caseResult)
+}
