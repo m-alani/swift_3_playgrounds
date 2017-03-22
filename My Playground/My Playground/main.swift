@@ -11,20 +11,28 @@ import Foundation
 // Read T
 let cases = Int(readLine()!)!
 
-// Solve the cases one by one
+// Process the cases
 var output = [Int]()
 for _ in 1...cases {
-    let bwTarget = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
-    var prices = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
-    if (prices[0] + prices[2]) < prices[1] {
-        prices[1] = prices[0] + prices[2]
-    } else if (prices[1] + prices[2]) < prices[0] {
-        prices[0] = prices[1] + prices[2]
+    let input = String(readLine()!)!.components(separatedBy: " ").map({Double($0)!})
+    let lowerBound = input[0].squareRoot()
+    let upperBound = input[1].squareRoot()
+    var difference = Int()
+    if (floor(lowerBound) == lowerBound) {
+        if (floor(upperBound) == upperBound) {
+            difference = Int(upperBound - lowerBound) + 1
+        } else {
+            difference = Int(ceil(upperBound - lowerBound))
+        }
+    } else if (floor(upperBound) == upperBound) {
+        difference = Int(ceil(upperBound - lowerBound))
+    } else {
+        difference = Int(floor(upperBound) - floor(lowerBound))
     }
-    output.append(prices[0]*bwTarget[0] + prices[1]*bwTarget[1])
+    output.append(difference)
 }
 
 // Print the output
-for caseResult in output {
-    print(caseResult)
+for number in output {
+    print(number)
 }
