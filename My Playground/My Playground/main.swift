@@ -8,31 +8,24 @@
 
 import Foundation
 
-// Read T
-let cases = Int(readLine()!)!
+// Read S & T
+var inputLine = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+let houseStart = inputLine[0]
+let houseEnd = inputLine[1]
 
-// Process the cases
-var output = [Int]()
-for _ in 1...cases {
-    let input = String(readLine()!)!.components(separatedBy: " ").map({Double($0)!})
-    let lowerBound = input[0].squareRoot()
-    let upperBound = input[1].squareRoot()
-    var difference = Int()
-    if (floor(lowerBound) == lowerBound) {
-        if (floor(upperBound) == upperBound) {
-            difference = Int(upperBound - lowerBound) + 1
-        } else {
-            difference = Int(ceil(upperBound - lowerBound))
-        }
-    } else if (floor(upperBound) == upperBound) {
-        difference = Int(ceil(upperBound - lowerBound))
-    } else {
-        difference = Int(floor(upperBound) - floor(lowerBound))
-    }
-    output.append(difference)
-}
+// Read A & B
+inputLine = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+let appleTree = inputLine[0]
+let orangeTree = inputLine[1]
 
-// Print the output
-for number in output {
-    print(number)
-}
+// Read M & N and ignore the values (not needed in our implementation)
+_ = readLine()
+
+// Read apples & oranges arrays
+let apples = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+let oranges = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+
+// Process the cases and print the output
+print(apples.filter({$0 + appleTree <= houseEnd && $0 + appleTree >= houseStart}).count)
+print(oranges.filter({$0 + orangeTree <= houseEnd && $0 + orangeTree >= houseStart}).count)
+
