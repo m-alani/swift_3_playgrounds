@@ -8,37 +8,34 @@
 
 import Foundation
 
-// Read Input
-let inputLine = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
-var x1 = inputLine[0]
-let v1 = inputLine[1]
-var x2 = inputLine[2]
-let v2 = inputLine[3]
+// Helper function to check if an integer is a factor of another
+func isFactorOf(number x: Int, factorOf y: Int) -> Bool {
+    return y % x == 0
+}
 
-// Process the input
-var output = "NO"
-if (v1 == v2) {
-    if (x1 == x2) {
-        output = "YES"
-    }
-} else if (v1 > v2) {
-    while (x2 > x1) {
-        x2 += v2
-        x1 += v1
-        if (x1 == x2) {
-            output = "YES"
+// Read (and ignore) N & M
+_ = readLine()
+
+// Read A & B
+let arrayA = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!}).sorted()
+let arrayB = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!}).sorted()
+
+// Process the arrays
+var output = 0
+if (arrayA[arrayA.count-1] < arrayB[0]) {
+    xCheck: for x in arrayA[arrayA.count-1]...arrayB[0] {
+        var satisfies = true
+        for a in arrayA {
+            satisfies = isFactorOf(number: a, factorOf: x)
+            if (!satisfies) { continue xCheck}
         }
-    }
-} else {
-    while (x1 > x2) {
-        x2 += v2
-        x1 += v1
-        if (x1 == x2) {
-            output = "YES"
+        for b in arrayB {
+            satisfies = isFactorOf(number: x, factorOf: b)
+            if (!satisfies) { continue xCheck}
         }
+        output += 1
     }
 }
 
 // Print the output
 print(output)
-
