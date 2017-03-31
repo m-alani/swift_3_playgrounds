@@ -8,21 +8,19 @@
 
 import Foundation
 
-// Read (and ignore) N
-_ = readLine()
+// Read K
+let k = Int(String(readLine()!)!.components(separatedBy: " ")[1])!
 
-// Read the candles heights
-let heights = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+// Read the array
+let array = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
 
-// Process the case
+// Process the array
 var output = 0
-var max = heights[0]
-for height in heights {
-    if height > max {
-        max = height
-        output = 1
-    } else if height == max {
-        output += 1
+for i in 0..<array.count-1 {
+    for j in i+1..<array.count {
+        if (array[i] + array[j]) % k == 0 {
+            output += 1
+        }
     }
 }
 
