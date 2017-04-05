@@ -8,21 +8,23 @@
 
 import Foundation
 
-// Read N (and ignore it) & the steps
-_ = readLine()
-let steps = String(readLine()!)!.characters
+// Read the input
+let money = Int(String(readLine()!)!.components(separatedBy: " ")[0])!
+let keyboards = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!}).sorted(by: {$0 < $1}) // ascending
+let usbs = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!}).sorted(by: {$0 >= $1}) // descending
 
-// Process the hike
-var alt = 0, valleyPoints = 0
-for step in steps {
-    if (step == "U") {
-        alt += 1
-        if (alt == 0) { valleyPoints += 1 }
+// Process the case
+var output = -1
+var keyIndex = 0, usbIndex = 0
+while (keyIndex < keyboards.count && usbIndex < usbs.count) {
+    let sum = keyboards[keyIndex] + usbs[usbIndex]
+    if (sum <= money) {
+        output = (output > sum) ? output : sum
+        keyIndex += 1
     } else {
-        alt -= 1
-        if (alt == -1) { valleyPoints += 1 }
+        usbIndex += 1
     }
 }
 
 // Print the output
-print(valleyPoints / 2)
+print(output)
