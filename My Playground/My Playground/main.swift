@@ -8,23 +8,21 @@
 
 import Foundation
 
-// Read the input
-let money = Int(String(readLine()!)!.components(separatedBy: " ")[0])!
-let keyboards = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!}).sorted(by: {$0 < $1}) // ascending
-let usbs = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!}).sorted(by: {$0 >= $1}) // descending
+// Read Q
+let queries = Int(readLine()!)!
 
-// Process the case
-var output = -1
-var keyIndex = 0, usbIndex = 0
-while (keyIndex < keyboards.count && usbIndex < usbs.count) {
-    let sum = keyboards[keyIndex] + usbs[usbIndex]
-    if (sum <= money) {
-        output = (output > sum) ? output : sum
-        keyIndex += 1
+// Process the queries one by one
+var output = [String]()
+for _ in 1...queries {
+    let positions = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+    if (abs(positions[0] - positions[2]) == abs(positions[1] - positions[2])) {
+        output.append("Mouse C")
     } else {
-        usbIndex += 1
+        output.append(abs(positions[0] - positions[2]) < abs(positions[1] - positions[2]) ? "Cat A" : "Cat B")
     }
 }
 
 // Print the output
-print(output)
+for line in output {
+    print(line)
+}
