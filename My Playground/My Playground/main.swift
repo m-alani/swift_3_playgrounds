@@ -8,21 +8,31 @@
 
 import Foundation
 
-// Read Q
-let queries = Int(readLine()!)!
 
-// Process the queries one by one
-var output = [String]()
-for _ in 1...queries {
-    let positions = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
-    if (abs(positions[0] - positions[2]) == abs(positions[1] - positions[2])) {
-        output.append("Mouse C")
-    } else {
-        output.append(abs(positions[0] - positions[2]) < abs(positions[1] - positions[2]) ? "Cat A" : "Cat B")
+/// Simple function to find the Fibonacci Sqeuence value of N recursively
+/// This function has the time complexity of O(2^n)
+///
+/// - Parameter n:  A non-negative integer representing the index of the Fibonacci sequence value to find
+/// - Returns:      A non-negative integer of the Fibonacci value at the given index
+func recursiveFib(of n: UInt) -> UInt {
+    var fib: UInt = 1
+    if (n > 1) {
+        fib = recursiveFib(of: n-1) + recursiveFib(of: n-2)
     }
+    return fib
 }
 
-// Print the output
-for line in output {
-    print(line)
-}
+
+
+/******************** BEGINNING OF MAIN ********************/
+
+// Set N to the desired Fibonacci number you want to test against
+let n: UInt = 40
+
+var startingTime = Date()
+var fibNumber = recursiveFib(of: n)
+var elapsedTime = Double(round(Date().timeIntervalSince(startingTime) * 1000) / 1000)
+
+print("The Fibonacci Sequence value of \(n) is: \(fibNumber)\n   Found in \(elapsedTime) seconds.")
+
+/*********************** END OF MAIN ***********************/
