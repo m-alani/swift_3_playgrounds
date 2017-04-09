@@ -8,56 +8,42 @@
 
 import Foundation
 
-// This implementation assumes that the Fibonacci Sequnece (F) base cases are F(1) & F(2), both equal to 1
+// Read the input
+var input = [[Int]]()
+input.append(String(readLine()!)!.components(separatedBy: " ").map({Int($0)!}))
+input.append(String(readLine()!)!.components(separatedBy: " ").map({Int($0)!}))
+input.append(String(readLine()!)!.components(separatedBy: " ").map({Int($0)!}))
 
-/// Simple function to find the Fibonacci Sqeuence value of N recursively
-/// This function has the time complexity of O(2^n)
-///
-/// - Parameter n:  A non-negative integer representing the index of the Fibonacci sequence value to find
-/// - Returns:      The Fibonacci value of the given index
-func recursiveFib(of n: UInt) -> UInt {
-    var fib: UInt = 1
-    if (n > 2) {
-        fib = recursiveFib(of: n-1) + recursiveFib(of: n-2)
-    }
-    return fib
-}
-
-
-/// A memoized implementation of the Fibonacci Sequence using Dynamic Programming.
-/// This function has the time complexity of O(n)
-///
-/// - Parameter n: A non-negative integer representing the index of the Fibonacci sequence value to find
-/// - Returns: The Fibonacci value of the given index
-func memoizedFib(of n: UInt) -> UInt {
-    var cache = [UInt:UInt]()
-    cache[0] = 0
-    cache[1] = 1
-    func fib(_ n: UInt) -> UInt {
-        if (cache[n] == nil) {
-            cache[n] = fib(n-1) + fib(n-2)
+// Helper function to find the cost of converting a matrix to another
+func costToConvert(matrix mat1: [[Int]], into mat2: [[Int]]) -> Int {
+    var cost = 0
+    for row in 0...2 {
+        for column in 0...2 {
+            cost += abs(mat1[row][column] - mat2[row][column])
         }
-        return cache[n]!
     }
-    return fib(n)
+    return cost
 }
 
+// Helper array of all possible 3x3 magic matrices
+let magic3x3 = [
+    [[8, 1, 6], [3, 5, 7], [4, 9, 2]],
+    [[6, 1, 8], [7, 5, 3], [2, 9, 4]],
+    [[8, 3, 4], [1, 5, 9], [6, 7, 2]],
+    [[4, 3, 8], [9, 5, 1], [2, 7, 6]],
+    [[6, 7, 2], [1, 5, 9], [8, 3, 4]],
+    [[2, 7, 6], [9, 5, 1], [4, 3, 8]],
+    [[4, 9, 2], [3, 5, 7], [8, 1, 6]],
+    [[2, 9, 4], [7, 5, 3], [6, 1, 8]]
+]
 
-/******************** BEGINNING OF MAIN ********************/
+// Find the minimum cost 
+var output = 55
+for matrix in magic3x3 {
+    let cost = costToConvert(matrix: input, into: matrix)
+    output = (cost < output) ? cost : output
+}
 
-// Set N to the desired Fibonacci number you want to test against
-let n: UInt = 45
+// Print the output
+print(output)
 
-// Find the Fibonacci of N using the regular approach
-var startingTime = Date()
-var fibNumber = recursiveFib(of: n)
-var elapsedTime = Double(round(Date().timeIntervalSince(startingTime) * 1000) / 1000)
-print("Regular Approach:\n  The Fibonacci Sequence value of \(n) is: \(fibNumber)\n    Found in \(elapsedTime) seconds.")
-
-// Find the Fibonacci of N using Dynamic Programming
-startingTime = Date()
-fibNumber = memoizedFib(of: n)
-elapsedTime = Double(round(Date().timeIntervalSince(startingTime) * 1000) / 1000)
-print("\nUsing Dynamic Programming:\n  The Fibonacci Sequence value of \(n) is: \(fibNumber)\n    Found in \(elapsedTime) seconds.")
-
-/*********************** END OF MAIN ***********************/
