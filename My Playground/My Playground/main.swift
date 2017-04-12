@@ -9,38 +9,36 @@
 import Foundation
 
 // Read input
-let queries = Int(readLine()!)!
+let games = Int(readLine()!)!
 
-// Process the queries
+// Process the games
 var output = [String]()
-for _ in 1...queries {
+for _ in 1...games {
+  // 0 = true, 1 = false
   _ = readLine()
-  var array = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
-  var unswappable = false   // Flag to break out when we can't perform a swap
-  var sorted = false        // Flag to break out if a single search cycle is completed with no swaps (the array is sorted already)
-  main:for i in 1...array.count {
-    var j = array.count - i
-    sorted = true
-    while (j > 0) {
-      if (array[j] < array[j-1]) {
-        if (abs(array[j] - array[j-1]) > 1) {
-          unswappable = true
-          break main
-        } else {
-          swap(&array[j], &array[j-1])
-          sorted = false
+  var game = String(readLine()!)!.components(separatedBy: " ").map({Int($0)! == 0})
+  if (game.count < 3) {
+    output.append("Bob")
+    continue
+  } else {
+    var plays = 0
+    var stop = false
+    while (!stop && game.count > 2) {
+      stop = true
+      for idx in 0..<(game.count-2) {
+        if (game[idx] && game[idx + 2]) {
+          game.remove(at: idx + 1)
+          plays += 1
+          stop = false
+          break
         }
       }
-      j -= 1
     }
-    if (sorted) {
-      break main
-    }
+    output.append((plays % 2 == 0) ? "Bob" : "Alice")
   }
-  output.append((unswappable) ? "No" : "Yes")
 }
 
 // Print the output
-for answer in output {
-  print(answer)
+for line in output {
+  print(line)
 }
