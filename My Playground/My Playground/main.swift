@@ -8,44 +8,29 @@
 
 import Foundation
 
-// Read input
-let games = Int(readLine()!)!
+// Helper function to test a specific index
+func checkIndex(m: Int, d: Int, arr: [Int], idx: Int) -> Bool {
+  var sum = 0
+  for i in idx..<idx + m {
+    sum += arr[i]
+  }
+  return sum == d
+}
 
-// Process the games
-var output = [String]()
-for _ in 1...games {
-  // 0 = true, 1 = false
-  _ = readLine()
-  let game = String(readLine()!)!.components(separatedBy: " ").map({$0 == "0"})
-  if (game.count < 3) {
-    output.append("Bob")
-    continue
-  } else {
-    var plays = 0, prev = -1, left = 0, curr = 1, right = 2
-    while (right < game.count) {
-      if (game[left] && game[right]) {
-        plays += 1
-        if (prev != -1 && game[prev]) {
-          let temp = curr
-          curr = left
-          left = prev
-          prev -= 1
-        } else {
-          curr = right
-          right += 1
-        }
-      } else {
-        prev = left
-        left = curr
-        curr = right
-        right += 1
-      }
-    }
-    output.append((plays % 2 == 0) ? "Bob" : "Alice")
+// Read input
+_ = readLine()
+let bar = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+let temp = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+let d = temp[0], m = temp[1]
+
+// Process the case
+var output = 0
+let maxIdx = (bar.count == 1) ? 1 : bar.count - m + 1
+for idx in 0..<maxIdx {
+  if checkIndex(m: m, d: d, arr: bar, idx: idx) {
+    output += 1
   }
 }
 
 // Print the output
-for line in output {
-  print(line)
-}
+print(output)
