@@ -8,28 +8,19 @@
 
 import Foundation
 
-// Helper function to test a specific index
-func checkIndex(m: Int, d: Int, arr: [Int], idx: Int) -> Bool {
-  var sum = 0
-  for i in idx..<idx + m {
-    sum += arr[i]
-  }
-  return sum == d
-}
-
 // Read input
 _ = readLine()
-let bar = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
-let temp = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
-let d = temp[0], m = temp[1]
+let numbers = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!}).sorted()
 
-// Process the case
-var output = 0
-let maxIdx = (bar.count == 1) ? 1 : bar.count - m + 1
-for idx in 0..<maxIdx {
-  if checkIndex(m: m, d: d, arr: bar, idx: idx) {
-    output += 1
+// Process the array of numbers
+var output = 1
+for i in 0..<numbers.count {
+  var j = i, count = 0
+  while (j < numbers.count && abs(numbers[j] - numbers[i]) < 2) {
+    count += 1
+    j += 1
   }
+  output = max(output, count)
 }
 
 // Print the output
