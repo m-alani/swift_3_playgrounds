@@ -9,19 +9,20 @@
 import Foundation
 
 // Read input
-_ = readLine()
-let numbers = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!}).sorted()
+var str = Array(String(readLine()!)!.characters)
 
-// Process the array of numbers
-var output = 1
-for i in 0..<numbers.count {
-  var j = i, count = 0
-  while (j < numbers.count && abs(numbers[j] - numbers[i]) < 2) {
-    count += 1
-    j += 1
+// Process the case
+var idx = 0
+while (!str.isEmpty && idx < str.count - 1) {
+  if (str[idx] == str[idx+1]) {
+    str.removeSubrange(idx...idx+1)
+    idx = (idx == 0) ? 0 : idx - 1
+  } else {
+    idx += 1
   }
-  output = max(output, count)
 }
+let output = (str.count > 0) ? String(str) : "Empty String"
 
 // Print the output
 print(output)
+
