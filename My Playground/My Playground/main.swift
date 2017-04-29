@@ -8,21 +8,5 @@
 
 import Foundation
 
-// Read input
-var str = Array(String(readLine()!)!.characters)
-
-// Process the case
-var idx = 0
-while (!str.isEmpty && idx < str.count - 1) {
-  if (str[idx] == str[idx+1]) {
-    str.removeSubrange(idx...idx+1)
-    idx = (idx == 0) ? 0 : idx - 1
-  } else {
-    idx += 1
-  }
-}
-let output = (str.count > 0) ? String(str) : "Empty String"
-
-// Print the output
-print(output)
-
+// Attempt to squeeze everything into 1 line, and preferrably make it unreadable ... because I'm l33t
+print(String(readLine()!)!.characters.filter({"ABCDEFGHIJKLMNOPQRSTUVWXYZ".contains(String($0))}).count+1)
