@@ -6,5 +6,23 @@
 //  Copyright © 2017 Marwan Alani. All rights reserved.
 //
 
-// Attempt to squeeze everything into 1 line, and preferrably make it unreadable ... because I'm l33t
-import Foundation;print(String(readLine()!)!.characters.filter({"ABCDEFGHIJKLMNOPQRSTUVWXYZ".contains(String($0))}).count+1)
+import Foundation
+
+// Get the input
+_ = readLine()
+var input = Array(String(readLine()!)!.utf16)
+let cipher = Int(readLine()!)!
+
+// Encrypt the characters
+for i in 0..<input.count {
+  switch input[i] {
+  case 65...90:
+    input[i] = input[i].advanced(by: cipher)
+    print(Int(input[i]))
+  default: break
+  }
+}
+
+// Print the output
+let output = String(utf16CodeUnits: input, count: input.count)
+print(output)
