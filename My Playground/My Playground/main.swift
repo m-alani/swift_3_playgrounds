@@ -14,15 +14,17 @@ var input = Array(String(readLine()!)!.utf16)
 let cipher = Int(readLine()!)!
 
 // Encrypt the characters
+var output = [Character]()
 for i in 0..<input.count {
   switch input[i] {
   case 65...90:
-    input[i] = input[i].advanced(by: cipher)
-    print(Int(input[i]))
-  default: break
+    output.append(Character(UnicodeScalar((((Int(input[i]) - 65) + cipher ) % 26) + 65)!))
+  case 97...122:
+    output.append(Character(UnicodeScalar((((Int(input[i]) - 97) + cipher ) % 26) + 97)!))
+  default:
+    output.append(Character(UnicodeScalar(input[i])!))
   }
 }
 
 // Print the output
-let output = String(utf16CodeUnits: input, count: input.count)
-print(output)
+print(String(output))
