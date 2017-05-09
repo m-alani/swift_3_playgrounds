@@ -9,22 +9,24 @@
 import Foundation
 
 // Get the input
-_ = readLine()
-var input = Array(String(readLine()!)!.utf16)
-let cipher = Int(readLine()!)!
+var input = String(readLine()!)!.characters
 
-// Encrypt the characters
-var output = [Character]()
-for i in 0..<input.count {
-  switch input[i] {
-  case 65...90:
-    output.append(Character(UnicodeScalar((((Int(input[i]) - 65) + cipher ) % 26) + 65)!))
-  case 97...122:
-    output.append(Character(UnicodeScalar((((Int(input[i]) - 97) + cipher ) % 26) + 97)!))
-  default:
-    output.append(Character(UnicodeScalar(input[i])!))
+// Process the string
+var output = 0, subIdx = 1
+for char in input {
+  if (subIdx == 2) {
+    if (char != "O") {
+      output += 1
+    }
+  } else {
+    if (char != "S") {
+      output += 1
+    }
   }
+  subIdx = (subIdx == 3) ? 1 : subIdx + 1
 }
 
 // Print the output
-print(String(output))
+print(output)
+
+
