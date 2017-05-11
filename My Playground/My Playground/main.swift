@@ -9,24 +9,27 @@
 import Foundation
 
 // Get the input
-var input = String(readLine()!)!.characters
+let queries = Int(readLine()!)!
 
-// Process the string
-var output = 0, subIdx = 1
-for char in input {
-  if (subIdx == 2) {
-    if (char != "O") {
-      output += 1
+// Use magic to solve this query
+var output = [String]()
+let hr = Array("hackerrank".characters)
+for _ in 1...queries {
+  let input = Array(String(readLine()!)!.lowercased().characters)
+  var idx = 0, inputIdx = 0
+  while (inputIdx < input.count && idx < 10) {
+    if (input[inputIdx] == hr[idx]) {
+      idx += 1
     }
-  } else {
-    if (char != "S") {
-      output += 1
-    }
+    inputIdx += 1
   }
-  subIdx = (subIdx == 3) ? 1 : subIdx + 1
+  output.append((idx == 10) ? "YES" : "NO")
 }
 
-// Print the output
-print(output)
+// Print output
+for line in output {
+  print(line)
+}
+
 
 
