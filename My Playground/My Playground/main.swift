@@ -9,27 +9,18 @@
 import Foundation
 
 // Get the input
-let queries = Int(readLine()!)!
+let input = Array(String(readLine()!)!.lowercased().characters)
 
-// Use magic to solve this query
-var output = [String]()
-let hr = Array("hackerrank".characters)
-for _ in 1...queries {
-  let input = Array(String(readLine()!)!.lowercased().characters)
-  var idx = 0, inputIdx = 0
-  while (inputIdx < input.count && idx < 10) {
-    if (input[inputIdx] == hr[idx]) {
-      idx += 1
-    }
-    inputIdx += 1
+// Solve the mystery
+var alphabet = Set("abcdefghijklmnopqrstuvwxyz".characters)
+var output = "not pangram"
+for letter in input {
+  alphabet.remove(letter)
+  if (alphabet.count == 0) {
+    output = "pangram"
+    break
   }
-  output.append((idx == 10) ? "YES" : "NO")
 }
 
-// Print output
-for line in output {
-  print(line)
-}
-
-
-
+// Print the output
+print(output)
