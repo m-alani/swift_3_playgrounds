@@ -9,18 +9,15 @@
 import Foundation
 
 // Get the input
-let input = Array(String(readLine()!)!.lowercased().characters)
+let cases = Int(readLine()!)!
 
-// Solve the mystery
-var alphabet = Set("abcdefghijklmnopqrstuvwxyz".characters)
-var output = "not pangram"
-for letter in input {
-  alphabet.remove(letter)
-  if (alphabet.count == 0) {
-    output = "pangram"
-    break
-  }
+// Solve the cases
+var output = [UInt]()
+for _ in 1...cases {
+  output.append(4294967295 - UInt(readLine()!)!)
 }
 
 // Print the output
-print(output)
+for line in output {
+  print(line)
+}
