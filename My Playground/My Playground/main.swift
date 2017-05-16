@@ -9,15 +9,17 @@
 import Foundation
 
 // Get the input
-let cases = Int(readLine()!)!
+let stones = Int(readLine()!)!
 
-// Solve the cases
-var output = [UInt]()
-for _ in 1...cases {
-  output.append(4294967295 - UInt(readLine()!)!)
+// Get the first stone
+var stone: [Character] = Array(String(readLine()!)!.characters)
+var gemElements = Set(stone)
+
+// Process all other stones
+for _ in 1..<stones {
+  stone = Array(String(readLine()!)!.characters)
+  gemElements = gemElements.intersection(stone)
 }
 
 // Print the output
-for line in output {
-  print(line)
-}
+print(gemElements.count)
