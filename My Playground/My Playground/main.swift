@@ -9,24 +9,13 @@
 import Foundation
 
 // Get the input
-let str1 = Array(String(readLine()!)!.characters)
-let str2 = Array(String(readLine()!)!.characters)
+let nk = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+let heights = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
 
-// Process the strings
-var dict1 = [Character : Int]()
-var dict2 = [Character : Int]()
-let alphabet = Array("abcdefghijklmnopqrstuvwxyz".characters)
-_ = alphabet.map({dict1[$0] = 0; dict2[$0] = 0})
-for letter in str1 {
-  dict1[letter]! += 1
-
-}
-for letter in str2 {
-  dict2[letter]! += 1
-}
+// Go through the hurdles
 var output = 0
-for letter in alphabet {
-  output += abs(dict1[letter]! - dict2[letter]!)
+for height in heights {
+  output = (height - nk[1] > output) ? height - nk[1] : output
 }
 
 // Print the output
