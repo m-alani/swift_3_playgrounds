@@ -8,15 +8,20 @@
 
 import Foundation
 
-// Get the input
-let nk = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+// Read the input
 let heights = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+let word = Array(String(readLine()!)!.utf16)
 
-// Go through the hurdles
-var output = 0
-for height in heights {
-  output = (height - nk[1] > output) ? height - nk[1] : output
+// Find the area for that word
+var height = 0
+for letter in word {
+  let toCompare = heights[Int(letter) - 97]
+  height = (height < toCompare) ? toCompare : height
 }
+let output = word.count * height
 
 // Print the output
 print(output)
+
+
+
