@@ -9,19 +9,23 @@
 import Foundation
 
 // Read the input
-let heights = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
-let word = Array(String(readLine()!)!.utf16)
+let cases = Int(readLine()!)!
 
-// Find the area for that word
-var height = 0
-for letter in word {
-  let toCompare = heights[Int(letter) - 97]
-  height = (height < toCompare) ? toCompare : height
+// Read and solve each case
+var output = [Int]()
+for _ in 1...cases {
+  var cycles = Int(readLine()!)!
+  var height = 1
+  var spring = true
+  while (cycles > 0) {
+    height = (spring) ? height * 2 : height + 1
+    spring = !spring
+    cycles -= 1
+  }
+  output.append(height)
 }
-let output = word.count * height
 
-// Print the output
-print(output)
-
-
-
+// Print output
+for tree in output {
+  print(tree)
+}
