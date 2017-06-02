@@ -8,24 +8,24 @@
 
 import Foundation
 
-// Read the input
+// Get no. of cases
 let cases = Int(readLine()!)!
+var output = [String]()
 
-// Read and solve each case
-var output = [Int]()
-for _ in 1...cases {
-  var cycles = Int(readLine()!)!
-  var height = 1
-  var spring = true
-  while (cycles > 0) {
-    height = (spring) ? height * 2 : height + 1
-    spring = !spring
-    cycles -= 1
+// Process the cases
+for _ in 0..<cases {
+  let minStudents = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})[1]
+  let arrivals = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+  var onTime = 0
+  for arrival in arrivals {
+    if (arrival < 1) {
+      onTime += 1
+    }
   }
-  output.append(height)
+  output.append((onTime < minStudents) ? "YES" : "NO")
 }
 
-// Print output
-for tree in output {
-  print(tree)
+// Print the output
+for line in output {
+  print(line)
 }
