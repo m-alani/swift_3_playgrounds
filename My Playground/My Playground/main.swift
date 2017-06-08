@@ -8,24 +8,17 @@
 
 import Foundation
 
-// Get no. of cases
-let cases = Int(readLine()!)!
-var output = [String]()
+// Read input
+let input = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
 
-// Process the cases
-for _ in 0..<cases {
-  let minStudents = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})[1]
-  let arrivals = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
-  var onTime = 0
-  for arrival in arrivals {
-    if (arrival < 1) {
-      onTime += 1
-    }
+// Process the case
+var output = 0
+for i in input[0]...input[1] {
+  let reversed = Int(String(String(i).characters.reversed()))!
+  if (abs(i - reversed) % input[2] == 0) {
+    output += 1
   }
-  output.append((onTime < minStudents) ? "YES" : "NO")
 }
 
 // Print the output
-for line in output {
-  print(line)
-}
+print(output)
