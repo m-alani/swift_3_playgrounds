@@ -8,16 +8,19 @@
 
 import Foundation
 
-// Read N
-let days = Int(readLine()!)!
+// Read the number of test cases
+let cases = Int(readLine()!)!
 
-// Find the number of likes
-var base = 2
-var likes = 2
-for _ in 1..<days {
-  base = (base * 3) / 2
-  likes += base
+// Go case by case
+var output = [Int]()
+for _ in 1...cases {
+  let inputArr = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+  let prisoners = inputArr[0], startIndex = inputArr[2]
+  let sweets = (inputArr[1] % prisoners) - 1
+  output.append(((sweets + startIndex) % prisoners) == 0 ? prisoners : ((sweets + startIndex) % prisoners))
 }
 
 // Print the output
-print(likes)
+for line in output {
+  print(line)
+}
