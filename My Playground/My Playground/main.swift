@@ -8,16 +8,20 @@
 
 import Foundation
 
-// Read the number of test cases
-let cases = Int(readLine()!)!
+// Read the input
+var input = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+let array = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
 
-// Go case by case
+// Process the queries
+let queries = input[2]
+let shift = input[1] % array.count
 var output = [Int]()
-for _ in 1...cases {
-  let inputArr = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
-  let prisoners = inputArr[0], startIndex = inputArr[2]
-  let sweets = (inputArr[1] % prisoners) - 1
-  output.append(((sweets + startIndex) % prisoners) == 0 ? prisoners : ((sweets + startIndex) % prisoners))
+for _ in 0..<queries {
+  var index = Int(readLine()!)! - shift
+  if (index < 0) {
+    index += array.count
+  }
+  output.append(array[index])
 }
 
 // Print the output
