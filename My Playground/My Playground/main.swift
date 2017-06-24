@@ -2,7 +2,7 @@
 //  main.swift
 //  My Playground
 //
-//  Created by Marwan Alani on 2017-01-17.
+//  Created by Marwan Alani on 2017-01-17. <== That's when this ritual started!
 //  Copyright © 2017 Marwan Alani. All rights reserved.
 //
 
