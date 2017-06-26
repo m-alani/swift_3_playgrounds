@@ -8,11 +8,24 @@
 
 import Foundation
 
-// Read the input
-_ = readLine()
-let input = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+let defaultPath = FileManager.default.currentDirectoryPath + "/test.csv"
+let calendar = Calendar.current
 
-// Find & print the output
-for i in 0..<input.count {
-  print(input.index(of: input.index(of: (i+1))! + 1)! + 1)
-}
+let testDate = "2012-01-03 0:00"
+let date = testDate.components(separatedBy: " ")[0].components(separatedBy: "-").map({Int($0)})
+
+let dateByComponents = DateComponents(calendar: Calendar.current,
+                                      year: date[0],
+                                      month: date[1],
+                                      day: date[2])
+
+var anotherDate = DateComponents()
+anotherDate.year = 2011
+
+print (CommandLine.arguments)
+
+//do {
+//  
+//  print (try String(contentsOfFile: defaultPath))
+//
+//} catch {}
