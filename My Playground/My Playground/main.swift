@@ -9,18 +9,29 @@
 import Foundation
 
 // Read the inputs
-let jumpDistance = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})[1]
-let clouds = String(readLine()!)!.components(separatedBy: " ").map({$0 == "1"}) // true for a thunder cloud, false otherwise
+let pageSize = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})[1]
+let chapters = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
 
 // Process the problem
-var energy = 100
-var location = 0
-repeat {
-  location = (location + jumpDistance) % clouds.count
-  energy = (clouds[location]) ? energy - 3 : energy - 1
-} while (location != 0)
+var special = 0
+var page = 0
+for chapter in chapters {
+  var problemsOnPage = 0
+  page += 1
+  for problem in 1...chapter {
+    if (problemsOnPage == pageSize) {
+      page += 1
+      problemsOnPage = 1
+    } else {
+      problemsOnPage += 1
+    }
+    if (problem == page) {
+      special += 1
+    }
+  }
+}
 
-// Print the remaining energy
-print(energy)
+// Print the output
+print(special)
 
 
