@@ -8,30 +8,24 @@
 
 import Foundation
 
-// Read the inputs
-let pageSize = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})[1]
-let chapters = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
+// Read the number of cases
+let cases = Int(readLine()!)!
 
-// Solve the problem
-var special = 0
-var page = 0
-for chapter in chapters {
-  var problemsOnPage = 0
-  page += 1
-  for problem in 1...chapter {
-    if (problemsOnPage == pageSize) {
-      page += 1
-      problemsOnPage = 1
-    } else {
-      problemsOnPage += 1
-    }
-    if (problem == page) {
-      special += 1
-    }
+// Process each case
+var output = [Int]()
+for _ in 1...cases {
+  let numberStr = String(readLine()!)!
+  let number = Int(numberStr)!
+  var count = 0, iterator = number
+  while (iterator > 0) {
+    let current = iterator % 10
+    iterator /= 10
+    if (current != 0 && number % current == 0) { count += 1 }
   }
+  output.append(count)
 }
 
-// Print the output
-print(special)
-
-
+// print the output
+for number in output {
+  print(number)
+}
