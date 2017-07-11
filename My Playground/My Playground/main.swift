@@ -12,7 +12,7 @@ import Foundation
 let pageSize = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})[1]
 let chapters = String(readLine()!)!.components(separatedBy: " ").map({Int($0)!})
 
-// Process the problem
+// Solve the problem
 var special = 0
 var page = 0
 for chapter in chapters {
