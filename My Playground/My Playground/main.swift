@@ -8,17 +8,22 @@
 
 import Foundation
 
-// Read the input
-let shift = Int(String(readLine()!)!.components(separatedBy: " ")[1])!
-let numbers = String(readLine()!)!.components(separatedBy: " ")
+// Finding the GCD of 2 integers
 
-// Generate the shifted output
-var output = numbers[shift % numbers.count]
-for index in 1..<numbers.count {
-  output = output + " " + numbers[(index + shift) % numbers.count]
+func greedy_GCD(firstNumber a: Int, secondNumber b:Int) -> Int {
+  var gcd = min(a, b)
+  while (a % gcd != 0 || b % gcd != 0) {
+    gcd -= 1;
+  }
+  return gcd
 }
 
-// Print the output
-print(output)
+func GCD(largerNumber a: Int, smallerNumber b: Int) -> Int {
+  return (b == 0) ? a : GCD(largerNumber: b, smallerNumber: a % b)
+}
+
+
+print("Greedy : ", greedy_GCD(firstNumber: 5453001343, secondNumber: 1524870))
+print("Optimized : ", GCD(largerNumber: 5453001343, smallerNumber: 1524870))
 
 
