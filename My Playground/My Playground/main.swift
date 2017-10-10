@@ -8,22 +8,14 @@
 
 import Foundation
 
-// Finding the GCD of 2 integers
+// Finding the GCD of 2 integers using a recursive implementation of Euclid's Algorithm
 
-func greedy_GCD(firstNumber a: Int, secondNumber b:Int) -> Int {
-  var gcd = min(a, b)
-  while (a % gcd != 0 || b % gcd != 0) {
-    gcd -= 1;
-  }
-  return gcd
+func euclidGCD(firstNumber a: Int, secondNumber b:Int) -> Int {
+  return recursiveCall(largerNumber: abs(max(a, b)), smallerNumber: abs(min(a, b)))
 }
 
-func GCD(largerNumber a: Int, smallerNumber b: Int) -> Int {
-  return (b == 0) ? a : GCD(largerNumber: b, smallerNumber: a % b)
+func recursiveCall(largerNumber a: Int, smallerNumber b: Int) -> Int {
+  return (b == 0) ? a : recursiveCall(largerNumber: b, smallerNumber: a % b)
 }
 
-
-print("Greedy : ", greedy_GCD(firstNumber: 5453001343, secondNumber: 1524870))
-print("Optimized : ", GCD(largerNumber: 5453001343, smallerNumber: 1524870))
-
-
+print(euclidGCD(firstNumber: -9, secondNumber: 21))
