@@ -18,4 +18,4 @@ func recursiveCall(largerNumber a: Int, smallerNumber b: Int) -> Int {
   return (b == 0) ? a : recursiveCall(largerNumber: b, smallerNumber: a % b)
 }
 
-print(euclidGCD(firstNumber: -9, secondNumber: 21))
+print(euclidGCD(firstNumber: 9, secondNumber: 726))
