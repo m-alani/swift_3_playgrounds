@@ -8,14 +8,18 @@
 
 import Foundation
 
-// Finding the GCD of 2 integers using a recursive implementation of Euclid's Algorithm
-
-func euclidGCD(firstNumber a: Int, secondNumber b:Int) -> Int {
-  return recursiveCall(largerNumber: abs(max(a, b)), smallerNumber: abs(min(a, b)))
+func lengthOfLongestSubstring(_ s: String) -> Int {
+    var longest = 0
+    var letters = [Character: Int]()
+    for i in 0..<s.characters.count {
+        if let prev = letters[s[s.index(s.startIndex, offsetBy: i)]] {
+            longest = (longest < i - prev + 1) ? i - prev + 1 : longest
+        } else {
+            longest = (longest < i + 1) ? i + 1 : longest
+        }
+        letters[s[s.index(s.startIndex, offsetBy: i)]] = i
+    }
+    return longest
 }
 
-func recursiveCall(largerNumber a: Int, smallerNumber b: Int) -> Int {
-  return (b == 0) ? a : recursiveCall(largerNumber: b, smallerNumber: a % b)
-}
-
-print(euclidGCD(firstNumber: 9, secondNumber: 726))
+print(lengthOfLongestSubstring("pwwkew"))
