@@ -9,17 +9,20 @@
 import Foundation
 
 func lengthOfLongestSubstring(_ s: String) -> Int {
-    var longest = 0
+    var itr = s.characters.makeIterator() // In Swift 4, String is a collection type, so we can do "s.makeIterator()" without creating a Character View first
+    var longest = 0, begin = 0, end = 0
     var letters = [Character: Int]()
-    for i in 0..<s.characters.count {
-        if let prev = letters[s[s.index(s.startIndex, offsetBy: i)]] {
-            longest = (longest < i - prev + 1) ? i - prev + 1 : longest
-        } else {
-            longest = (longest < i + 1) ? i + 1 : longest
+    while let key = itr.next() {
+        if let prev = letters[key] {
+            if begin <= prev {
+                begin = prev + 1
+            }
         }
-        letters[s[s.index(s.startIndex, offsetBy: i)]] = i
+        letters[key] = end
+        if longest <= end - begin {
+            longest = end - begin + 1
+        }
+        end += 1
     }
     return longest
 }
-
-print(lengthOfLongestSubstring("pwwkew"))
