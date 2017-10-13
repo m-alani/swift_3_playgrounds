@@ -8,21 +8,19 @@
 
 import Foundation
 
-func lengthOfLongestSubstring(_ s: String) -> Int {
-    var itr = s.characters.makeIterator() // In Swift 4, String is a collection type, so we can do "s.makeIterator()" without creating a Character View first
-    var longest = 0, begin = 0, end = 0
-    var letters = [Character: Int]()
-    while let key = itr.next() {
-        if let prev = letters[key] {
-            if begin <= prev {
-                begin = prev + 1
-            }
-        }
-        letters[key] = end
-        if longest <= end - begin {
-            longest = end - begin + 1
-        }
-        end += 1
+func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
+  var result = [Int]()
+  var map = [Int:Int]()
+  for (index, num) in nums.enumerated() {
+    if let complimentIndex = map[num] {
+      result.append(complimentIndex)
+      result.append(index)
+      break
+    } else {
+      map[target - num] = index
     }
-    return longest
+    print(index)
+  }
+  return result
 }
+
