@@ -8,35 +8,22 @@
 
 import Foundation
 
-func longestPalindrome(_ s: String) -> String {
-  let input: [Character] = Array(s.characters)
-  var begin = 0, end = 0
-  for i in 0..<input.count {
-    var b = i, e = i
-    // for odd
-    while (b >= 0 && e < input.count && input[b] == input [e]) {
-      b -= 1
-      e += 1
-    }
-    if (e - b - 1 > end - begin) {
-      begin = b + 1
-      end = e - 1
-    }
-    // for even
-    b = i
-    e = i + 1
-    while (b >= 0 && e < input.count && input[b] == input [e]) {
-      b -= 1
-      e += 1
-    }
-    if (e - b - 1 > end - begin) {
-      begin = b + 1
-      end = e - 1
-    }
-    if ((end - begin) / 2 > input.count - i) {
-      break
+func reverse(_ x: Int) -> Int {
+  var temp: [Character] = Array(String(x)) // String(x).characters in Swift 3, since String didn't conform to Sequence then
+  if (temp[0] == "-") {
+    temp.append("-")
+    temp = temp.reversed()
+    temp.remove(at: temp.count - 1)
+  } else {
+    temp = temp.reversed()
+  }
+  if let result = Int(String(temp)) {
+    if (result > 2147483647 || result < -2147483648) {
+      return 0
+    } else {
+      return result
     }
   }
-  return String(input[begin...end])
+  return 0
 }
 
