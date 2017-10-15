@@ -8,28 +8,28 @@
 
 import Foundation
 
-var result = [[Int]]()
-
-func threeSum(_ nums: [Int]) -> [[Int]] {
+func threeSum(_ numbers: [Int]) -> [[Int]] {
+  let nums = numbers.sorted()
+  var result = [[Int]]()
   if (nums.count > 2) {
     for i in 0...nums.count - 3 {
-      for j in i+1...nums.count - 2 {
-        for k in j+1...nums.count - 1 {
-          if nums[i] + nums[j] + nums[k] == 0 {
-            insertUnique([nums[i], nums[j], nums[k]].sorted())
+      if i == 0 || (i > 0 && nums[i] != nums[i-1]) {
+        var l = i + 1, r = nums.count - 1
+        while (l < r) {
+          if (nums[i] + nums[l] + nums[r] == 0) {
+            result.append([nums[i], nums[l], nums[r]])
+            while (l < r && nums[l] == nums[l+1]) {l += 1}
+            while (l < r && nums[r] == nums[r-1]) {r -= 1}
+            l += 1
+            r -= 1
+          } else if (nums[i] + nums[l] + nums[r] < 0) {
+            l += 1
+          } else {
+            r -= 1
           }
         }
       }
     }
   }
   return result
-}
-
-func insertUnique(_ arr: [Int]) {
-  for a in result {
-    if a[0] == arr[0] && a[1] == arr[1] && a[2] == arr[2] {
-      return
-    }
-  }
-  result.append(arr)
 }
