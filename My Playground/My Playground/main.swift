@@ -8,22 +8,28 @@
 
 import Foundation
 
-func reverse(_ x: Int) -> Int {
-  var temp: [Character] = Array(String(x)) // String(x).characters in Swift 3, since String didn't conform to Sequence then
-  if (temp[0] == "-") {
-    temp.append("-")
-    temp = temp.reversed()
-    temp.remove(at: temp.count - 1)
-  } else {
-    temp = temp.reversed()
-  }
-  if let result = Int(String(temp)) {
-    if (result > 2147483647 || result < -2147483648) {
-      return 0
-    } else {
-      return result
+var result = [[Int]]()
+
+func threeSum(_ nums: [Int]) -> [[Int]] {
+  if (nums.count > 2) {
+    for i in 0...nums.count - 3 {
+      for j in i+1...nums.count - 2 {
+        for k in j+1...nums.count - 1 {
+          if nums[i] + nums[j] + nums[k] == 0 {
+            insertUnique([nums[i], nums[j], nums[k]].sorted())
+          }
+        }
+      }
     }
   }
-  return 0
+  return result
 }
 
+func insertUnique(_ arr: [Int]) {
+  for a in result {
+    if a[0] == arr[0] && a[1] == arr[1] && a[2] == arr[2] {
+      return
+    }
+  }
+  result.append(arr)
+}
