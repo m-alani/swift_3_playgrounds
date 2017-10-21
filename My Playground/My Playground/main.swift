@@ -8,28 +8,38 @@
 
 import Foundation
 
-func threeSum(_ numbers: [Int]) -> [[Int]] {
-  let nums = numbers.sorted()
-  var result = [[Int]]()
-  if (nums.count > 2) {
-    for i in 0...nums.count - 3 {
-      if i == 0 || (i > 0 && nums[i] != nums[i-1]) {
-        var l = i + 1, r = nums.count - 1
-        while (l < r) {
-          if (nums[i] + nums[l] + nums[r] == 0) {
-            result.append([nums[i], nums[l], nums[r]])
-            while (l < r && nums[l] == nums[l+1]) {l += 1}
-            while (l < r && nums[r] == nums[r-1]) {r -= 1}
-            l += 1
-            r -= 1
-          } else if (nums[i] + nums[l] + nums[r] < 0) {
-            l += 1
-          } else {
-            r -= 1
-          }
-        }
-      }
+func romanToInt(_ s: String) -> Int {
+  let input = [Character](s.characters).map({convertToNumber($0)})
+  var sum = 0, i = 0
+  while (i < input.count - 1) {
+    let curr = input[i], next = input[i+1]
+    if (curr < next) {
+      sum += next - curr
+      i += 2
+    } else {
+      sum += curr
+      i += 1
     }
   }
-  return result
+  if (i < input.count) {
+    sum += input[i]
+  }
+  return sum
 }
+
+func convertToNumber(_ c: Character) -> Int {
+  var num: Int
+  switch c {
+  case "I": num = 1
+  case "V": num = 5
+  case "X": num = 10
+  case "L": num = 50
+  case "C": num = 100
+  case "D": num = 500
+  case "M": num = 1000
+  default: num = 0
+  }
+  return num
+}
+
+print(romanToInt("MMXIV"))
