@@ -1,5 +1,5 @@
 import Foundation
 
-let range = 5...9
+var range = "a"..<"g"
 
-print(range.last!)
+print(range.upperBound)
