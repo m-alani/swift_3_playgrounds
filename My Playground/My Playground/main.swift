@@ -8,38 +8,18 @@
 
 import Foundation
 
-func romanToInt(_ s: String) -> Int {
-  let input = [Character](s.characters).map({convertToNumber($0)})
-  var sum = 0, i = 0
-  while (i < input.count - 1) {
-    let curr = input[i], next = input[i+1]
-    if (curr < next) {
-      sum += next - curr
-      i += 2
+func removeElement(_ nums: inout [Int], _ val: Int) -> Int {
+  var last = nums.count, itr = 0
+  while (itr < last) {
+    if (nums[itr] == val) {
+      last -= 1
+      nums[itr] = nums[last]
     } else {
-      sum += curr
-      i += 1
+      itr += 1
     }
   }
-  if (i < input.count) {
-    sum += input[i]
-  }
-  return sum
+  return last
 }
 
-func convertToNumber(_ c: Character) -> Int {
-  var num: Int
-  switch c {
-  case "I": num = 1
-  case "V": num = 5
-  case "X": num = 10
-  case "L": num = 50
-  case "C": num = 100
-  case "D": num = 500
-  case "M": num = 1000
-  default: num = 0
-  }
-  return num
-}
-
-print(romanToInt("MMXIV"))
+var test = [2, 3, 3, 6, 3]
+print(removeElement(&test, 3))
