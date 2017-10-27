@@ -8,18 +8,20 @@
 
 import Foundation
 
-func removeElement(_ nums: inout [Int], _ val: Int) -> Int {
-  var last = nums.count, itr = 0
-  while (itr < last) {
-    if (nums[itr] == val) {
-      last -= 1
-      nums[itr] = nums[last]
-    } else {
-      itr += 1
-    }
-  }
-  return last
+var result = [String]()
+
+func generateParenthesis(_ n: Int) -> [String] {
+  solveRecursive(n, 0, 0, "")
+  return result
 }
 
-var test = [2, 3, 3, 6, 3]
-print(removeElement(&test, 3))
+func solveRecursive(_ n: Int, _ left: Int, _ right: Int, _ currentStr: String) {
+  if (currentStr.count == n * 2) {
+    result.append(currentStr)
+    return
+  }
+  if (left < n) { solveRecursive(n, left + 1, right, currentStr + "(") }
+  if (right < left) { solveRecursive(n, left, right + 1, currentStr + ")") }
+}
+
+print(generateParenthesis(3))
