@@ -8,34 +8,41 @@
 
 import Foundation
 
-func minMutation(_ start: String, _ end: String, _ bank: [String]) -> Int {
-  var result = 0
-  
-  // convert to characters arrays for easier handling
-  var s1 = [Character](start.characters)
-  let s2 = [Character](end.characters)
-  
-  // look for a path
-  for i in 0..<s1.count {
-    if s1[i] != s2[i] {
-      s1[i] = s2[i]
-      let temp = String(s1)
-      var found = false
-      for word in bank {
-        if word == temp {
-          found = true
-          break
-        }
-      }
-      if found {
-        result += 1
-      } else {
-        return -1
-      }
-    }
+var mapping: [[Character]] = [[" "],
+               [],
+               ["a","b","c"],
+               ["d","e","f"],
+               ["g","h","i"],
+               ["j","k","l"],
+               ["m","n","o"],
+               ["p","q","r","s"],
+               ["t","u","v"],
+               ["w","x","y","z"]
+              ]
+
+var output = [String]()
+
+func letterCombinations(_ digits: String) -> [String] {
+  let input = [Character](digits.characters)
+  if (input.count > 0) {
+    recursiveSolution(input, [Character]())
   }
-  return result
+  return output
 }
 
-print(minMutation("AACCGGTT", "AAACGGTA", ["AACCGGTA","AACCGCTA","AAACGGTA"]))
+func recursiveSolution(_ digits: [Character], _ word: [Character]) {
+  if digits.count == 0 {
+    output.append(String(word))
+    return
+  }
+  let digit = Int(String(digits[0]).utf8.first!) - 48
+  var newDigits = digits
+  newDigits.removeFirst()
+  for char in mapping[digit] {
+    var newWord = word
+    newWord.append(char)
+    recursiveSolution(newDigits, newWord)
+  }
+}
 
+print(letterCombinations("087"))
