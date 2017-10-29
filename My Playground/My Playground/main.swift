@@ -8,41 +8,43 @@
 
 import Foundation
 
-var mapping: [[Character]] = [[" "],
-               [],
-               ["a","b","c"],
-               ["d","e","f"],
-               ["g","h","i"],
-               ["j","k","l"],
-               ["m","n","o"],
-               ["p","q","r","s"],
-               ["t","u","v"],
-               ["w","x","y","z"]
-              ]
-
-var output = [String]()
-
-func letterCombinations(_ digits: String) -> [String] {
-  let input = [Character](digits.characters)
-  if (input.count > 0) {
-    recursiveSolution(input, [Character]())
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public var val: Int
+ *     public var next: ListNode?
+ *     public init(_ val: Int) {
+ *         self.val = val
+ *         self.next = nil
+ *     }
+ * }
+ */
+class Solution {
+  func mergeKLists(_ input: [ListNode?]) -> ListNode? {
+    var lists = input
+    if lists.count == 0 { return nil }
+    let dummy = ListNode(0)
+    var curr: ListNode? = dummy
+    var keepGoing = true
+    while keepGoing {
+      keepGoing = false
+      var index = -1
+      for i in 0..<lists.count {
+        if let temp = lists[i] {
+          if (index < 0) {
+            index = i
+          } else if (temp.val < lists[index]!.val) {
+            index = i
+          }
+        }
+      }
+      if index >= 0 {
+        curr?.next = ListNode(lists[index]!.val)
+        curr = curr?.next
+        lists[index] = lists[index]!.next
+        keepGoing = true
+      }
+    }
+    return dummy.next
   }
-  return output
 }
-
-func recursiveSolution(_ digits: [Character], _ word: [Character]) {
-  if digits.count == 0 {
-    output.append(String(word))
-    return
-  }
-  let digit = Int(String(digits[0]).utf8.first!) - 48
-  var newDigits = digits
-  newDigits.removeFirst()
-  for char in mapping[digit] {
-    var newWord = word
-    newWord.append(char)
-    recursiveSolution(newDigits, newWord)
-  }
-}
-
-print(letterCombinations("087"))
