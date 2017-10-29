@@ -10,41 +10,38 @@ import Foundation
 
 /**
  * Definition for singly-linked list.
- * public class ListNode {
- *     public var val: Int
- *     public var next: ListNode?
- *     public init(_ val: Int) {
- *         self.val = val
- *         self.next = nil
- *     }
- * }
  */
+public class ListNode {
+   public var val: Int
+   public var next: ListNode?
+   public init(_ val: Int) {
+     self.val = val
+     self.next = nil
+   }
+}
+
 class Solution {
-  func mergeKLists(_ input: [ListNode?]) -> ListNode? {
-    var lists = input
-    if lists.count == 0 { return nil }
-    let dummy = ListNode(0)
-    var curr: ListNode? = dummy
-    var keepGoing = true
-    while keepGoing {
-      keepGoing = false
-      var index = -1
-      for i in 0..<lists.count {
-        if let temp = lists[i] {
-          if (index < 0) {
-            index = i
-          } else if (temp.val < lists[index]!.val) {
-            index = i
-          }
-        }
-      }
-      if index >= 0 {
-        curr?.next = ListNode(lists[index]!.val)
-        curr = curr?.next
-        lists[index] = lists[index]!.next
-        keepGoing = true
+  func mergeKLists(_ lists: [ListNode?]) -> ListNode? {
+    
+    // Convert the input into an array (O(n))
+    var array = [Int]()
+    for list in lists {
+      var itr = list
+      while itr != nil {
+        array.append(itr!.val)
+        itr = itr?.next
       }
     }
+    let dummy = ListNode(0)
+    var itr: ListNode? = dummy
+    
+    // Then sort the array (O(n log n)) and generate a new list of the merged numbers (O(n))
+    for num in array.sorted() {
+      itr?.next = ListNode(num)
+      itr = itr?.next
+    }
+    
+    // Total: O(n log n) time complexity & O(n) space complexity
     return dummy.next
   }
 }
