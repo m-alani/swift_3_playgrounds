@@ -20,14 +20,20 @@ public class ListNode {
    }
 }
 
-class Solution {
-  func swapPairs(_ head: ListNode?) -> ListNode? {
-    if (head == nil || head?.next == nil) {
-      return head
+func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
+  var distance = n
+  var dummy = ListNode(0)
+  dummy.next = head
+  var parent: ListNode? = dummy
+  var itr = head
+  while itr != nil {
+    itr = itr?.next
+    if distance == 0 {
+      parent = parent?.next
+    } else {
+      distance -= 1
     }
-    let swappedHead = head?.next
-    head?.next = swapPairs(head?.next?.next)
-    swappedHead?.next = head
-    return swappedHead
   }
+  parent?.next = parent?.next?.next
+  return dummy.next
 }
