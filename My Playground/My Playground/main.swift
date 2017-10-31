@@ -8,32 +8,14 @@
 
 import Foundation
 
-/**
- * Definition for singly-linked list.
- */
-public class ListNode {
-   public var val: Int
-   public var next: ListNode?
-   public init(_ val: Int) {
-     self.val = val
-     self.next = nil
-   }
+func strStr(_ haystack: String, _ needle: String) -> Int {
+  if needle == "" { return 0 }
+  let range = haystack.range(of: needle, options: [.literal])
+  if let range = range {
+    return haystack.distance(from: haystack.startIndex, to: range.lowerBound)
+  } else {
+    return -1
+  }
 }
 
-func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
-  var distance = n
-  var dummy = ListNode(0)
-  dummy.next = head
-  var parent: ListNode? = dummy
-  var itr = head
-  while itr != nil {
-    itr = itr?.next
-    if distance == 0 {
-      parent = parent?.next
-    } else {
-      distance -= 1
-    }
-  }
-  parent?.next = parent?.next?.next
-  return dummy.next
-}
+print(strStr("abcdefghijklmn", "bc"))
