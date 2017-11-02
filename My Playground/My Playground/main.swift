@@ -10,6 +10,7 @@ import Foundation
 
 func strStr(_ haystack: String, _ needle: String) -> Int {
   if needle == "" { return 0 }
+  if needle.count > haystack.count { return -1 }
   let range = haystack.range(of: needle, options: [.literal])
   if let range = range {
     return haystack.distance(from: haystack.startIndex, to: range.lowerBound)
