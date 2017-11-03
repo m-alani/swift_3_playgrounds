@@ -8,34 +8,22 @@
 
 import Foundation
 
-func nextPermutation(_ nums: inout [Int]) {
-    var l = -1, i = nums.count - 2
-    while (i >= 0) {
-        if nums[i] < nums[i + 1] {
-            l = i
-            break
+func findSubstring(_ s: String, _ words: [String]) -> [Int] {
+    var result = [Int]()
+    let input = Array(s.characters)
+    if words.count == 0 || s.isEmpty { return result }
+    let length = words[0].characters.count
+    var dict = Set(words)
+    var start = 0, end = start + length
+    while start < input.count {
+        let word = String(input[start..<end])
+        if (dict.remove(word) != nil) {
+            result.append(start)
         }
-        i -= 1
+        start = end
+        end = start + length
     }
-    if l == -1 {
-        nums = Array(nums.reversed())
-        return
-    }
-    var r = -1
-    i = nums.count - 1
-
-    while (i > l) {
-        if nums[i] > nums[l] {
-            r = i
-            break
-        }
-        i -= 1
-    }
-    nums.swapAt(l, r)
-    nums.replaceSubrange(l + 1..<nums.count, with: Array(Array(nums[l + 1...nums.count - 1]).reversed()))
+    return result
 }
 
-var sample = [1, 4, 5]
-nextPermutation(&sample)
-print(sample)
-
+print(findSubstring("barfoothefoobarman", ["foo", "bar"]))
