@@ -35,7 +35,7 @@ func nextPermutation(_ nums: inout [Int]) {
     nums.replaceSubrange(l + 1..<nums.count, with: Array(Array(nums[l + 1...nums.count - 1]).reversed()))
 }
 
-var sample = [1, 1, 5]
+var sample = [1, 4, 5]
 nextPermutation(&sample)
 print(sample)
 
