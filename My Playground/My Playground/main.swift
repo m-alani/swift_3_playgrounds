@@ -12,21 +12,22 @@ func validPalindrome(_ input: String) -> Bool {
   let s = [Character](input)
   if s.count < 2 { return true }
   var l = 0, r = s.count - 1
-  var skipped = false
   while l < r {
     if s[l] != s[r] {
-      if s[l] == s[r - 1] {
-        r -= 1
-        if skipped { return false } else { skipped = true }
-      } else if s[l + 1] == s[r] {
-        l += 1
-        if skipped { return false } else { skipped = true }
-      } else {
-        return false
-      }
+      return validate(s, l+1, r) || validate(s, l, r-1)
     }
     r -= 1
     l += 1
+  }
+  return true
+}
+
+func validate(_ s: [Character], _ left: Int, _ right: Int) -> Bool {
+  var l = left, r = right
+  while l < r {
+    if s[l] != s[r] { return false }
+    l += 1
+    r -= 1
   }
   return true
 }
