@@ -8,22 +8,28 @@
 
 import Foundation
 
-func findSubstring(_ s: String, _ words: [String]) -> [Int] {
-    var result = [Int]()
-    let input = Array(s.characters)
-    if words.count == 0 || s.isEmpty { return result }
-    let length = words[0].characters.count
-    var dict = Set(words)
-    var start = 0, end = start + length
-    while start < input.count {
-        let word = String(input[start..<end])
-        if (dict.remove(word) != nil) {
-            result.append(start)
-        }
-        start = end
-        end = start + length
+func validPalindrome(_ input: String) -> Bool {
+  let s = [Character](input)
+  if s.count < 2 { return true }
+  var l = 0, r = s.count - 1
+  var skipped = false
+  while l < r {
+    if s[l] != s[r] {
+      if s[l] == s[r - 1] {
+        r -= 1
+        if skipped { return false } else { skipped = true }
+      } else if s[l + 1] == s[r] {
+        l += 1
+        if skipped { return false } else { skipped = true }
+      } else {
+        return false
+      }
     }
-    return result
+    r -= 1
+    l += 1
+  }
+  return true
 }
 
-print(findSubstring("barfoothefoobarman", ["foo", "bar"]))
+print(validPalindrome("ebcbbececabbacecbbcbe"))
+
