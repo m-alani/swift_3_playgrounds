@@ -8,29 +8,28 @@
 
 import Foundation
 
-func validPalindrome(_ input: String) -> Bool {
-  let s = [Character](input)
-  if s.count < 2 { return true }
-  var l = 0, r = s.count - 1
-  while l < r {
-    if s[l] != s[r] {
-      return validate(s, l+1, r) || validate(s, l, r-1)
+func findTheDifference(_ s: String, _ t: String) -> Character {
+  let original = [Character](s), shuffled = [Character](t)
+  var dict = [Character : Int]()
+  
+  // Populate the dictionary
+  for letter in shuffled {
+    let count = dict[letter] ?? 0
+    dict[letter] = count + 1
+  }
+  
+  // Remove the duplicate letters
+  for letter in original {
+    let value = dict[letter]
+    if value == 1 {
+      dict[letter] = nil
+    } else {
+      dict[letter] = value! - 1
     }
-    r -= 1
-    l += 1
   }
-  return true
+  
+  // Return the only character left in the dictionary
+  return dict.first?.key ?? Character("")
 }
 
-func validate(_ s: [Character], _ left: Int, _ right: Int) -> Bool {
-  var l = left, r = right
-  while l < r {
-    if s[l] != s[r] { return false }
-    l += 1
-    r -= 1
-  }
-  return true
-}
-
-print(validPalindrome("ebcbbececabbacecbbcbe"))
-
+print(findTheDifference("abcd", "abedc"))
