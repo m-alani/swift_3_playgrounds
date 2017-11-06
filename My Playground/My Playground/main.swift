@@ -8,24 +8,7 @@
 
 import Foundation
 
-var count = 0
-
-func countSubstrings(_ s: String) -> Int {
-  if !s.isEmpty {
-    let input = [Character](s)
-    for i in 0..<input.count {
-      extend(input, i, i) // for odd length palindromes
-      extend(input, i, i + 1) // for even length palindromes
-    }
-  }
-  return count
+func search(_ nums: [Int], _ target: Int) -> Int {
+  return nums.index(of: target) ?? -1
 }
 
-func extend(_ s: [Character], _ left: Int, _ right: Int) {
-  var l = left, r = right
-  while (l >= 0 && r < s.count && s[l] == s[r]) {
-    count += 1; l -= 1; r += 1
-  }
-}
-
-print(countSubstrings("aaa"))
