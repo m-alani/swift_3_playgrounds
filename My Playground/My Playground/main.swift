@@ -8,17 +8,21 @@
 
 import Foundation
 
-func searchRange(_ nums: [Int], _ target: Int) -> [Int] {
-  let start = nums.index(of: target)
-  if let s = start {
-    var e = s
-    while e < nums.count && nums[e] == target {
-      e += 1
-    }
-    return [s, e - 1]
+var paths = 0
+    
+func uniquePaths(_ m: Int, _ n: Int) -> Int {
+  findPath(m, n, 1, 1)
+  return paths
+}
+
+func findPath(_ m: Int, _ n: Int, _ x: Int, _ y: Int) {
+  if x > m || y > n { return }
+  if x == m && y == n {
+    paths += 1
   } else {
-    return [-1, -1]
+    findPath(m, n, x + 1, y)
+    findPath(m, n, x, y + 1)
   }
 }
 
-print(searchRange([5, 7, 7, 8, 8, 10], 8))
+print(uniquePaths(1, 2))
