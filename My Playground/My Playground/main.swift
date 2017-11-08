@@ -8,21 +8,17 @@
 
 import Foundation
 
-var paths = 0
-    
-func uniquePaths(_ m: Int, _ n: Int) -> Int {
-  findPath(m, n, 1, 1)
-  return paths
-}
-
-func findPath(_ m: Int, _ n: Int, _ x: Int, _ y: Int) {
-  if x > m || y > n { return }
-  if x == m && y == n {
-    paths += 1
-  } else {
-    findPath(m, n, x + 1, y)
-    findPath(m, n, x, y + 1)
+func longestPalindromeSubseq(_ s: String) -> Int {
+  var letters = Set<Character>()
+  var longest = 0
+  for letter in s {
+    if letters.remove(letter) != nil {
+      longest += 2
+    } else {
+      letters.insert(letter)
+    }
   }
+  return (!s.isEmpty && longest == 0) ? 1 : longest
 }
 
-print(uniquePaths(1, 2))
+print(longestPalindrome("aaa"))
