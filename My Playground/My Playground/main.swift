@@ -8,17 +8,15 @@
 
 import Foundation
 
-func longestPalindromeSubseq(_ s: String) -> Int {
-  var letters = Set<Character>()
-  var longest = 0
-  for letter in s {
-    if letters.remove(letter) != nil {
-      longest += 2
-    } else {
-      letters.insert(letter)
+func searchInsert(_ nums: [Int], _ target: Int) -> Int {
+  var position = -1
+  for (idx, num) in nums.enumerated() {
+    if num >= target {
+      position = idx
+      break
     }
   }
-  return (!s.isEmpty && longest == 0) ? 1 : longest
+  return (position == -1) ? nums.count : position
 }
 
-print(longestPalindrome("aaa"))
+print(searchInsert([], 7))
