@@ -9,14 +9,14 @@
 import Foundation
 
 func searchInsert(_ nums: [Int], _ target: Int) -> Int {
-  var position = -1
-  for (idx, num) in nums.enumerated() {
-    if num >= target {
-      position = idx
-      break
-    }
+  var l = 0, r = nums.count - 1
+  while (l <= r) {
+    let mid = (l + r) / 2
+    if nums[mid] == target { return mid }
+    else if nums[mid] < target { l = mid + 1 }
+    else { r = mid - 1 }
   }
-  return (position == -1) ? nums.count : position
+  return l
 }
 
-print(searchInsert([], 7))
+print(searchInsert([2, 4, 5, 8], 7))
