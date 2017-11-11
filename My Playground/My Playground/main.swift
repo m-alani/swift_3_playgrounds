@@ -8,15 +8,31 @@
 
 import Foundation
 
-func searchInsert(_ nums: [Int], _ target: Int) -> Int {
-  var l = 0, r = nums.count - 1
-  while (l <= r) {
-    let mid = (l + r) / 2
-    if nums[mid] == target { return mid }
-    else if nums[mid] < target { l = mid + 1 }
-    else { r = mid - 1 }
+var visited = [Bool]()
+var m = [[Int]]()
+
+func DFS(_ i: Int) {
+  for j in 0..<m.count {
+    if m[i][j] == 1 && !visited[j] {
+      visited[j] = true
+      DFS(j)
+    }
   }
-  return l
 }
 
-print(searchInsert([2, 4, 5, 8], 7))
+func findCircleNum(_ M: [[Int]]) -> Int {
+  var count = 0
+  visited = Array(repeating: false, count: M.count)
+  m = M
+  for i in 0..<m.count {
+    if !visited[i] {
+      DFS(i)
+      count += 1
+    }
+  }
+  return count
+}
+
+print(findCircleNum([[1,1,0],
+                     [1,1,0],
+                     [0,0,1]]))
