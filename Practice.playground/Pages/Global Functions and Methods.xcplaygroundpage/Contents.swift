@@ -1,5 +1,5 @@
 import Foundation
 
-var range = "a"..<"g"
+var x = 75
 
-print(range.upperBound)
+print(String(x ,radix: 2))
