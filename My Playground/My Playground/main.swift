@@ -8,21 +8,15 @@
 
 import Foundation
 
-func longestConsecutive(_ nums: [Int]) -> Int {
-  var result = 0
-  var map = [Int: Int]()
-  for num in nums {
-    if map[num] == nil {
-      let left = map[num - 1] ?? 0
-      let right = map[num + 1] ?? 0
-      let current = left + 1 + right
-      result = max(current, result)
-      map[num] = current
-      map[num - left] = current
-      map[num + right] = current
+func containsNearbyAlmostDuplicate(_ nums: [Int], _ k: Int, _ t: Int) -> Bool {
+  if nums.count < 2 || k < 1 { return false }
+  for i in 0..<nums.count-1 {
+    for j in i+1...i+k {
+      if j == nums.count { break }
+      else if abs(nums[i] - nums[j]) <= t { return true }
     }
   }
-  return result
+  return false
 }
 
-print(longestConsecutive([100, 4, 200, 1, 3, 2]))
+print(containsNearbyAlmostDuplicate([2,2], 3, 0))
