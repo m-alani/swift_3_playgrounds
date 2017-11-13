@@ -12,22 +12,21 @@ var result = false
 
 func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
   let dict = Set(wordDict)
-  check(word: s, in: dict)
-  return result
-}
-
-func check(word s: String, in words: Set<String>) {
-  if s.isEmpty || result { result = true; return }
-  var subWord = ""
-  for char in s {
-    subWord.append(char)
-    if words.contains(subWord) {
-      var newWord = s
-      newWord.removeSubrange(s.range(of: subWord)!)
-      check(word: newWord, in: words)
+  var f = Array(repeating: false, count: s.count + 1)
+  f[0] = true;
+  for i in 1...s.count {
+    for j in 0..<i {
+      let range = s.index(s.startIndex, offsetBy: j)..<s.index(s.startIndex, offsetBy: i)
+      let word = s.substring(with: range)
+      if f[j] && dict.contains(word) {
+        f[i] = true;
+        break;
+      }
     }
   }
+  return f[s.count];
 }
+
 
 let testWord = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"
 let testDict =
