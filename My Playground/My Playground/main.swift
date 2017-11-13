@@ -8,28 +8,31 @@
 
 import Foundation
 
-var result = false
+var memo = [[Int]]()
+var A = [Int]()
+var B = [Int]()
 
-func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
-  let dict = Set(wordDict)
-  var f = Array(repeating: false, count: s.count + 1)
-  f[0] = true;
-  for i in 1...s.count {
-    for j in 0..<i {
-      let range = s.index(s.startIndex, offsetBy: j)..<s.index(s.startIndex, offsetBy: i)
-      let word = s.substring(with: range)
-      if f[j] && dict.contains(word) {
-        f[i] = true;
-        break;
-      }
-    }
-  }
-  return f[s.count];
+func findLength(_ arrayA: [Int], _ arrayB: [Int]) -> Int {
+  A = arrayA
+  B = arrayB
+  memo = Array(repeating: Array(repeating: -1, count: B.count), count: A.count)
+  if A.count == 0 || B.count == 0 { return 0 }
+  return compare(A.count - 1, B.count - 1)
 }
 
+func compare(_ ptrA: Int, _ ptrB: Int) -> Int {
+  var result = Int()
+  if ptrA < 0 || ptrB < 0 {
+    return 0
+  } else if memo[ptrA][ptrB] != -1 {
+    return memo[ptrA][ptrB]
+  } else if A[ptrA] == B[ptrB] {
+    result = 1 + compare(ptrA - 1, ptrB - 1)
+  } else {
+    result = max(compare(ptrA - 1, ptrB), compare(ptrA, ptrB - 1))
+  }
+  memo[ptrA][ptrB] = result
+  return result
+}
 
-let testWord = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab"
-let testDict =
-["a","aa","aaa","aaaa","aaaaa","aaaaaa","aaaaaaa","aaaaaaaa","aaaaaaaaa","aaaaaaaaaa"]
-
-print(wordBreak(testWord, testDict))
+print(findLength([1], [3,2,1,4,7]))
