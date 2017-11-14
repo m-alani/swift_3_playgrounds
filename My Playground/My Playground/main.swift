@@ -10,32 +10,31 @@ import Foundation
 
 var A = [Int]()
 var B = [Int]()
-var memos = [[Int]]()
+var memos = [[Int?]]()
 
 func check(_ i: Int, _ j: Int) -> Int {
   if i < 0 || j < 0 { return 0 }
-  if A[i] == B[j] {
-    if memos[i][j] == -1 {
+  if memos[i][j] == nil {
+    if A[i] == B[j] {
       let temp = 1 + check(i - 1, j - 1)
       memos[i][j] = temp
-      return temp
     } else {
-      return memos[i][j]
+      memos[i][j] = 0
     }
-  } else {
-    memos[i][j] = 0
-    return 0
   }
+  return memos[i][j]!
 }
 
 func findLength(_ arrayA: [Int], _ arrayB: [Int]) -> Int {
   A = arrayA
   B = arrayB
   var result = 0
-  memos = Array(repeating: Array(repeating: -1, count: B.count), count: A.count)
+  memos = Array(repeating: Array(repeating: nil, count: B.count), count: A.count)
   if A.count == 0 || B.count == 0 { return 0 }
   for i in 0..<A.count {
+    if i < result { continue }
     for j in 0..<B.count {
+      if j < result { continue }
       let temp = check(i, j)
       if temp > result { result = temp }
     }
