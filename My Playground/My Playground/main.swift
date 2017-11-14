@@ -8,35 +8,17 @@
 
 import Foundation
 
-var A = [Int]()
-var B = [Int]()
-var memos = [[Int?]]()
-
-func check(_ i: Int, _ j: Int) -> Int {
-  if i < 0 || j < 0 { return 0 }
-  if memos[i][j] == nil {
-    if A[i] == B[j] {
-      let temp = 1 + check(i - 1, j - 1)
-      memos[i][j] = temp
-    } else {
-      memos[i][j] = 0
-    }
-  }
-  return memos[i][j]!
-}
-
-func findLength(_ arrayA: [Int], _ arrayB: [Int]) -> Int {
-  A = arrayA
-  B = arrayB
+func findLength(_ A: [Int], _ B: [Int]) -> Int {
   var result = 0
-  memos = Array(repeating: Array(repeating: nil, count: B.count), count: A.count)
-  if A.count == 0 || B.count == 0 { return 0 }
-  for i in 0..<A.count {
-    if i < result { continue }
-    for j in 0..<B.count {
-      if j < result { continue }
-      let temp = check(i, j)
-      if temp > result { result = temp }
+  var memo = Array(repeating: Array(repeating: 0, count: B.count + 1), count: A.count + 1)
+  for i in 0...A.count {
+    for j in 0...B.count {
+      if i != 0 && j != 0 {
+        if A[i-1] == B[j-1] {
+          memo[i][j] = 1 + memo[i-1][j-1]
+          result = max(result, memo[i][j])
+        }
+      }
     }
   }
   return result
