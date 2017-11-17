@@ -8,30 +8,35 @@
 
 import Foundation
 
-func find(_ str: [Character], _ idx: Int) -> Int {
-  let char = str[idx]
-  var result = 1
-  while idx + result < str.count && str[idx + result] == str[idx] { result += 1 }
+var nums = [Int]()
+var target = 0
+var result = [[Int]]()
+
+func combinationSum(_ candidates: [Int], _ tar: Int) -> [[Int]] {
+  nums = candidates.sorted()
+  target = tar
+  expand(0, [Int]())
   return result
 }
 
-func countAndSay(_ n: Int) -> String {
-  if n < 1 { return "" }
-  var str: [Character] = ["1"]
-  var iteration = 1
-  while iteration < n {
-    var newStr = [Character]()
-    var ptr = 0 
-    while ptr < str.count {
-      let reps = find(str, ptr)
-      newStr.append(String(reps).first!)
-      newStr.append(str[ptr])
-      ptr += reps
+func expand(_ sum: Int, _ arr: [Int]) {
+  let current = arr.last ?? 0
+  for num in nums {
+    if num < current { continue }
+    let newSum = sum + num
+    if newSum == target {
+      var newArr = arr
+      newArr.append(num)
+      result.append(newArr)
+    } else if newSum < target {
+      var newArr = arr
+      newArr.append(num)
+      expand(newSum, newArr)
+    } else {
+      break
     }
-    iteration += 1
-    str = newStr
   }
-  return String(str)
 }
 
-print(countAndSay(5))
+print([2, 3, 6, 7], 7)
+
