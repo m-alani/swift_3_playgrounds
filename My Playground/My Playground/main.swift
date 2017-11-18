@@ -38,5 +38,5 @@ func expand(_ sum: Int, _ arr: [Int]) {
   }
 }
 
-print([2, 3, 6, 7], 7)
+print(combinationSum([2, 3, 6, 7], 11))
 
