@@ -8,41 +8,25 @@
 
 import Foundation
 
-func splitByLength(_ s: String, _ n: Int) -> [String] {
-  var output = [String]()
-  var start = s.startIndex, end = s.index(start, offsetBy: n)
-  while start != s.endIndex {
-    output.append(s.substring(with: start..<end))
-    start = end
-    end = s.index(start, offsetBy: n, limitedBy: s.endIndex) ?? s.endIndex
-  }
-  return output
-}
-
-func repeatedSubstringPattern(_ s: String) -> Bool {
+func repeatedSubstringPattern(_ input: String) -> Bool {
+  guard input.count > 1 else { return false }
+  let s = [Character](input)
   var result = false
-  let count = s.count
-  if count > 1 {
-    var i = count / 2
-    while i > 0 {
-      if count % i == 0 {
-        let split = splitByLength(s, i)
-        var flag = true
-        for word in split {
-          if word != split[0] {
-            flag = false
-            break
-          }
-        }
-        if flag {
-          result = true
-          i = 0
-        }
+  var length = s.count / 2
+  while length > 0 {
+    if s.count % length == 0 {
+      var start = 0, end = length
+      while end < s.count && s[start] == s[end] {
+        start += 1; end += 1
       }
-      i -= 1
+      if end == s.count {
+        length = 0
+        result = true
+      }
     }
+    length -= 1
   }
   return result
 }
 
-print(repeatedSubstringPattern("aafbjrbfjkebwfjbwek"))
+print(repeatedSubstringPattern("aabbgaabb"))
