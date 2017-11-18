@@ -8,35 +8,41 @@
 
 import Foundation
 
-var nums = [Int]()
-var target = 0
-var result = [[Int]]()
+func splitByLength(_ s: String, _ n: Int) -> [String] {
+  var output = [String]()
+  var start = s.startIndex, end = s.index(start, offsetBy: n)
+  while start != s.endIndex {
+    output.append(s.substring(with: start..<end))
+    start = end
+    end = s.index(start, offsetBy: n, limitedBy: s.endIndex) ?? s.endIndex
+  }
+  return output
+}
 
-func combinationSum(_ candidates: [Int], _ tar: Int) -> [[Int]] {
-  nums = candidates.sorted()
-  target = tar
-  expand(0, [Int]())
+func repeatedSubstringPattern(_ s: String) -> Bool {
+  var result = false
+  let count = s.count
+  if count > 1 {
+    var i = count / 2
+    while i > 0 {
+      if count % i == 0 {
+        let split = splitByLength(s, i)
+        var flag = true
+        for word in split {
+          if word != split[0] {
+            flag = false
+            break
+          }
+        }
+        if flag {
+          result = true
+          i = 0
+        }
+      }
+      i -= 1
+    }
+  }
   return result
 }
 
-func expand(_ sum: Int, _ arr: [Int]) {
-  let current = arr.last ?? 0
-  for num in nums {
-    if num < current { continue }
-    let newSum = sum + num
-    if newSum == target {
-      var newArr = arr
-      newArr.append(num)
-      result.append(newArr)
-    } else if newSum < target {
-      var newArr = arr
-      newArr.append(num)
-      expand(newSum, newArr)
-    } else {
-      break
-    }
-  }
-}
-
-print(combinationSum([2, 3, 6, 7], 11))
-
+print(repeatedSubstringPattern("aafbjrbfjkebwfjbwek"))
