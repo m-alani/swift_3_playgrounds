@@ -8,9 +8,24 @@
 
 import Foundation
 
-let input = UInt(readLine()!)!
-if input == 0 {
-  print("1")
-} else {
-  print(pow(2, Array(String(input, radix: 2)).filter({$0 == "0"}).count))
+func fourSumCount(_ A: [Int], _ B: [Int], _ C: [Int], _ D: [Int]) -> Int {
+  var count = 0
+  var dict = [Int:Int]()
+  for i in 0..<A.count {
+    for j in 0..<B.count {
+      let key = A[i] + B[j]
+      dict[key] = (dict[key] ?? 0) + 1
+    }
+  }
+  for i in 0..<C.count {
+    for j in 0..<D.count {
+      let key = (C[i] + D[j]) * -1
+      if let num = dict[key] {
+        count += num
+      }
+    }
+  }
+  return count
 }
+
+print(fourSumCount([-1,-1], [-1,1], [-1,1], [1,-1]))
