@@ -14,4 +14,4 @@ func constructRectangle(_ area: Int) -> [Int] {
     return [area / width, width]
 }
 
-print(constructRectangle(25))
+print(constructRectangle(26))
