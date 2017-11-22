@@ -8,10 +8,10 @@
 
 import Foundation
 
-func constructRectangle(_ area: Int) -> [Int] {
-    var width = Int(sqrt(Double(area)))
-    while area % width != 0 { width -= 1 }
-    return [area / width, width]
-}
+// Task Scheduler
 
-print(constructRectangle(26))
+var test = [(task: String, freq: Int)]()
+test.append(("A", 3))
+test.append(("B", 6))
+
+print(test.sorted(by: { $0.freq > $1.freq }))
