@@ -8,22 +8,15 @@
 
 import Foundation
 
-func findShortestSubArray(_ nums: [Int]) -> Int {
-  var degree = 0, result = Int.max
-  var frequency = [Int:Int]()
-  var ranges = [Int: (first: Int, last: Int)]()
-  for (idx, num) in nums.enumerated() {
-    frequency[num] = (frequency[num] ?? 0) + 1
-    ranges[num] = ((ranges[num]?.first ?? idx), idx)
-    if (frequency[num]! > degree) { degree = frequency[num]! }
-  }
-  for num in nums {
-    if frequency[num] == degree {
-      result = min(result, ranges[num]!.last - ranges[num]!.first + 1)
-    }
-  }
-  return result
-}
+var test = [String: Int]()
+test["A"] = 16
+test["G"] = 11
+test["Z"] = 21
 
-print(findShortestSubArray([1,2,2,3,1]))
+print(test)
 
+var sorted = test.sorted(by: { $0.value > $1.value })
+
+sorted[0].value -= 1
+
+print(sorted)
