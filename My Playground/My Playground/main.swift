@@ -8,27 +8,13 @@
 
 import Foundation
 
-// helper fucntion
-func dictionirize(_ arr: [Character]) -> [Int] {
-  var dict = [Character: Int]()
-  for char in arr {
-    dict[char] = (dict[char] ?? 0) + 1
-  }
-  return dict.values.sorted(by: >)
-}
-
 func leastInterval(_ tasks: [Character], _ n: Int) -> Int {
   if tasks.count == 1 || n == 0 { return tasks.count }
-  var sortedTasks = dictionirize(tasks)
-  var cooldown = 0, total = 0, zeroCount = 0
-  while zeroCount != sortedTasks.count {
-    total += 1
-    let index = (cooldown + zeroCount) % sortedTasks.count
-    sortedTasks[index] -= 1
-    if sortedTasks[index] == 0 { zeroCount += 1 }
-    cooldown = (cooldown < n) ? cooldown + 1 : 0
-  }
-  return total
+  var dict = [Character: Int]()
+  for char in tasks { dict[char] = (dict[char] ?? 0) + 1 }
+  let arr = dict.values.sorted(by: >) // 3 2 1
+  let maximum = arr.first! - 1, count = arr.filter({ $0 == arr.first! }).count // 1
+  return max(tasks.count, (maximum * (n+1)) + count)
 }
 
 print(leastInterval(["A","A","A","C","B","B"], 2))
