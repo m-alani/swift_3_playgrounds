@@ -8,12 +8,13 @@
 
 import Foundation
 
-func printFactorial(of n: Int) {
-  var current = 1
-  for i in 1...n {
-    current *= i
-    print(current)
+func trailingZeroes(_ num: Int) -> Int {
+  var result = 0, n = num
+  while n >= 5 {
+    n /= 5
+    result += n
   }
+  return result
 }
 
-printFactorial(of: 12)
+print(trailingZeroes(26))
