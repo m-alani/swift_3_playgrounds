@@ -8,14 +8,12 @@
 
 import Foundation
 
-func leastInterval(_ tasks: [Character], _ n: Int) -> Int {
-  if tasks.count == 1 || n == 0 { return tasks.count }
-  var dict = [Character: Int]()
-  for char in tasks { dict[char] = (dict[char] ?? 0) + 1 }
-  let arr = dict.values.sorted(by: >) // 3 2 1
-  let maximum = arr.first! - 1, count = arr.filter({ $0 == arr.first! }).count // 1
-  return max(tasks.count, (maximum * (n+1)) + count)
+func printFactorial(of n: Int) {
+  var current = 1
+  for i in 1...n {
+    current *= i
+    print(current)
+  }
 }
 
-print(leastInterval(["A","A","A","C","B","B"], 2))
-
+printFactorial(of: 12)
