@@ -8,13 +8,21 @@
 
 import Foundation
 
-func trailingZeroes(_ num: Int) -> Int {
-  var result = 0, n = num
-  while n >= 5 {
-    n /= 5
-    result += n
+func shiftToLeft(array a: inout [Int], by n: Int) {
+  if a.count < 2 { return }
+  var shifts = 0
+  while shifts < n {
+    let temp = a[0]
+    var i = 0
+    while i < a.count - 1 {
+      a[i] = a[i+1]
+      i += 1
+    }
+    a[a.count-1] = temp
+    shifts += 1
   }
-  return result
 }
 
-print(trailingZeroes(26))
+var a = [1,2,3,4,5,6]
+shiftToLeft(array: &a, by: 7)
+print(a)
