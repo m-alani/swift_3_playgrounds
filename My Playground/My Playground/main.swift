@@ -8,21 +8,14 @@
 
 import Foundation
 
-func shiftToLeft(array a: inout [Int], by n: Int) {
-  if a.count < 2 { return }
-  var shifts = 0
-  while shifts < n {
-    let temp = a[0]
-    var i = 0
-    while i < a.count - 1 {
-      a[i] = a[i+1]
-      i += 1
-    }
-    a[a.count-1] = temp
-    shifts += 1
+// Find the duplicate number
+
+func findDuplicate(_ nums: [Int]) -> Int {
+  if nums.count < 2 { return nums[0] }
+  let sorted = nums.sorted()
+  for i in 0..<nums.count - 1 {
+    if sorted[i] == sorted[i+1] { return sorted[i] }
   }
+  return 0
 }
 
-var a = [1,2,3,4,5,6]
-shiftToLeft(array: &a, by: 7)
-print(a)
