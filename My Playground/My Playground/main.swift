@@ -8,26 +8,18 @@
 
 import Foundation
 
-public class ListNode {
-   public var val: Int
-   public var next: ListNode?
-   public init(_ val: Int) {
-     self.val = val
-     self.next = nil
-   }
+let lowerCase = Set<Character>("abcdefghijklmnopqrstuvwxyz")
+let upperCase = Set<Character>("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+func detectCapitalUse(_ word: String) -> Bool {
+  if word.count < 2 { return true }
+  let input = [Character](word)
+  if upperCase.contains(input[0]) {
+    let rest = [Character](input[1...])
+    return rest.reduce(true, { $0 && lowerCase.contains($1) }) || rest.reduce(true, { $0 && upperCase.contains($1) })
+  }
+  return input.reduce(true, { $0 && lowerCase.contains($1) })
 }
 
-func isPalindrome(_ head: ListNode?) -> Bool {
-  var arr = [Int]()
-  var itr = head
-  var i = 0
-  while itr != nil {
-    arr.append(itr!.val)
-    itr = itr!.next
-  }
-  while i < (arr.count / 2) {
-    if arr[i] != arr[arr.count - i - 1] { return false }
-    i += 1
-  }
-  return true
-}
+print(detectCapitalUse("Crap"))
+
