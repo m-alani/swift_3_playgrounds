@@ -8,7 +8,8 @@
 
 import Foundation
 
-func bulbSwitch(_ n: Int) -> Int {
+// That's the greedy solution ... slow AF
+func bulbSwitchLong(_ n: Int) -> Int {
   if n < 2 { return n }
   var bulbs = Array(repeating: true, count: n)
   var i = 2
@@ -23,5 +24,10 @@ func bulbSwitch(_ n: Int) -> Int {
   return bulbs.filter({ $0 }).count
 }
 
-print(bulbSwitch(12))
+// This is an optimized solution, O(1)
+func bulbSwitch(_ n: Int) -> Int {
+  return Int(sqrt(Double(n)))
+}
+
+print(bulbSwitch(536271))
 
