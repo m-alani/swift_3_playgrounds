@@ -8,18 +8,20 @@
 
 import Foundation
 
-let lowerCase = Set<Character>("abcdefghijklmnopqrstuvwxyz")
-let upperCase = Set<Character>("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-
-func detectCapitalUse(_ word: String) -> Bool {
-  if word.count < 2 { return true }
-  let input = [Character](word)
-  if upperCase.contains(input[0]) {
-    let rest = [Character](input[1...])
-    return rest.reduce(true, { $0 && lowerCase.contains($1) }) || rest.reduce(true, { $0 && upperCase.contains($1) })
+func bulbSwitch(_ n: Int) -> Int {
+  if n < 2 { return n }
+  var bulbs = Array(repeating: true, count: n)
+  var i = 2
+  while i <= n {
+    var idx = i - 1
+    while idx < n {
+      bulbs[idx] = !bulbs[idx]
+      idx += i
+    }
+    i += 1
   }
-  return input.reduce(true, { $0 && lowerCase.contains($1) })
+  return bulbs.filter({ $0 }).count
 }
 
-print(detectCapitalUse("Crap"))
+print(bulbSwitch(12))
 
