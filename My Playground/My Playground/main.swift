@@ -8,17 +8,32 @@
 
 import Foundation
 
-func climbStairs(_ n: Int) -> Int {
-  if n == 1 { return 1 }
-  if n == 2 { return 2 }
-  var one = 2, two = 1, i = 2, ways = 0
-  while i < n {
-    i += 1
-    ways = one + two
-    two = one
-    one = ways
+/* Fake Stack Definition Begins */
+var stack = [Int]()
+
+func push(_ num: Int) {
+  if stack.isEmpty {
+    stack.append(num)
+  } else {
+    var idx = 0
+    for (i, n) in stack.enumerated() {
+      if num > n {
+        idx = i
+        break
+      }
+    }
+    stack.insert(num, at: idx)
   }
-  return ways
 }
 
-print(climbStairs(5))
+func pop() {
+  _ = stack.removeFirst()
+}
+
+func peek() -> Int {
+  return stack.first ?? 0
+}
+/* Fake Stack Definition Ends */
+
+let n = Int(readLine()!)!
+
