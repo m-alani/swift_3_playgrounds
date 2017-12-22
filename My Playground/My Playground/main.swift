@@ -31,7 +31,7 @@ func pop() {
 }
 
 func peek() -> Int {
-  return stack.first ?? 0
+  return stack.first ?? Int.min
 }
 /* Fake Stack Definition Ends */
 
