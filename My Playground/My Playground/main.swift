@@ -8,35 +8,18 @@
 
 import Foundation
 
-/* Fake Stack Definition Begins */
+/* Fake Stack */
 var stack = [Int]()
 
-func push(_ num: Int) {
-  if stack.isEmpty {
-    stack.append(num)
+var n = Int(readLine()!)!
+for _ in 0..<n {
+  let inputStr = readLine()!
+  let input = inputStr.components(separatedBy: " ").map({Int($0)!})
+  if input[0] == 3 {
+    print(stack.sorted().last ?? Int.max)
+  } else if input[0] == 2 {
+    _ = stack.removeFirst()
   } else {
-    var idx = stack.count
-    for (i, n) in stack.enumerated() {
-      if num > n {
-        idx = i
-        break
-      }
-    }
-    stack.insert(num, at: idx)
+    stack.insert(input[1], at: 0)
   }
 }
-
-func pop() {
-  _ = stack.removeFirst()
-}
-
-func peek() -> Int {
-  return stack.first ?? Int.min
-}
-/* Fake Stack Definition Ends */
-
-push(7)
-push(19)
-push(5)
-
-print(stack)
