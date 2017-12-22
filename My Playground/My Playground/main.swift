@@ -15,7 +15,7 @@ func push(_ num: Int) {
   if stack.isEmpty {
     stack.append(num)
   } else {
-    var idx = 0
+    var idx = stack.count
     for (i, n) in stack.enumerated() {
       if num > n {
         idx = i
@@ -35,5 +35,8 @@ func peek() -> Int {
 }
 /* Fake Stack Definition Ends */
 
-let n = Int(readLine()!)!
+push(7)
+push(19)
+push(5)
 
+print(stack)
