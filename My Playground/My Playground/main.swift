@@ -6,19 +6,21 @@
 
 import Foundation
 
-func pivotIndex(_ nums: [Int]) -> Int {
-  if nums.count >= 2 {
-    var sums = [Int]()
-    var sum = 0
-    sums.append(sum)
-    _ = nums.map({sum += $0; sums.append(sum)})
-    for (i, sum) in sums.enumerated() {
-      let right = (i == sums.count - 1) ? 0 : nums[i]
-      if sum == (sums.last! - sum - right) && (i != nums.count) { return i }
+func fizzBuzz(_ n: Int) {
+  guard n > 0 else { return }
+  for i in 1...n {
+    var line = ""
+    switch i {
+    case _ where i % 3 == 0:
+      line += "Fizz"
+      if (i % 5 == 0) { fallthrough }
+    case _ where i % 5 == 0:
+      line += "Buzz"
+    default:
+      line += String(i)
     }
+    print(line)
   }
-  return -1
 }
 
-print(pivotIndex([-1,-1,-1,1,1,1]))
-
+fizzBuzz(15)
