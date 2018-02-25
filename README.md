@@ -1,3 +1,3 @@
-# Swift 3 Playgrounds
+# Swift Playgrounds
 
   A testing repo to practice all things related to Swift
