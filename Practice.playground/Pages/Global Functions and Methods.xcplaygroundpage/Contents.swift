@@ -1,5 +1,15 @@
 import Foundation
 
-var x = 75
+struct Experiment {
+  var myString: String
+  var myInteger: Int?
+  var myBoolean: Bool
 
-print(String(x ,radix: 2))
+  init(myString: String, myInteger: Int? = nil, myBoolean: Bool = false) {
+    self.myString = myString
+    self.myInteger = myInteger
+    self.myBoolean = myBoolean
+  }
+}
+
+_ = Experiment(myString: "Hello World", myInteger: 32)
