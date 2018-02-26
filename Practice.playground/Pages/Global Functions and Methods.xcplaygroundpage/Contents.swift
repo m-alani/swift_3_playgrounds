@@ -1,15 +1,10 @@
 import Foundation
 
-struct Experiment {
-  var myString: String
-  var myInteger: Int?
-  var myBoolean: Bool
+let auth = (name: "Marwan", pass: "password")
 
-  init(myString: String, myInteger: Int? = nil, myBoolean: Bool = false) {
-    self.myString = myString
-    self.myInteger = myInteger
-    self.myBoolean = myBoolean
-  }
+switch auth {
+case ("Marwan", "password"):
+  print("Welcome, \(auth.name)")
+default:
+  print("Access Denied!")
 }
-
-_ = Experiment(myString: "Hello World", myInteger: 32)
