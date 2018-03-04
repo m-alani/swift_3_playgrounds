@@ -1,7 +1,20 @@
 import Foundation
 
-let age = 19
-
-if (18...65).contains(age) {
-  print("You should be working, you lazy ass!")
+class Person {
+  let name: String
+  let age: Int
+  
+  lazy var ageInDays: Int = {
+    return self.age * 365
+  }()
+  
+  init(name: String, age: Int) {
+    self.name = name
+    self.age = age
+  }
+  
 }
+
+let myPerson = Person(name: "Marwan", age: 33)
+
+print(myPerson.ageInDays)
