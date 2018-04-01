@@ -1,10 +1,19 @@
 //: ## Swift is 👑
 import Foundation
 
-func fibonacci(of num: Int) -> Int {
-  return (num < 2) ? num : fibonacci(of: num - 1) + fibonacci(of: num - 2)
+enum DownloadTask {
+    case ready
+    case downloading(progress: Int)
+    case finished
 }
 
-let fibValues = Array(0...100).lazy.map(fibonacci)
+let file1 = DownloadTask.downloading(progress: 0)
 
-print(fibValues[12])
+switch file1 {
+case .downloading(let progress) where (1..<100).contains(progress):
+    print("Downloading")
+case .ready, .finished:
+    print("Not currently downloading")
+default:
+    print("Not sure what's goin on...")
+}
