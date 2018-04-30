@@ -1,7 +1,6 @@
 //: ## Swift is 👑
 import Foundation
 
-var a = 5
-var b = 10
+let names = [String](repeating: " ", count: 10)
 
-(a, b) = (b ,a)
+names.count
