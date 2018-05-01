@@ -1,6 +1,7 @@
 //: ## Swift is 👑
 import Foundation
 
-let names = [String](repeating: " ", count: 10)
+let number = 233
+let binary = "\(number) in binary is " + String(number, radix: 2)
 
-names.count
+print(binary)
