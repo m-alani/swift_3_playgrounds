@@ -1,4 +1,3 @@
-//: ## Swift is 👑
 import Foundation
 
 var numbers = [28, -10, 11, 4, 99, 7, 0]
