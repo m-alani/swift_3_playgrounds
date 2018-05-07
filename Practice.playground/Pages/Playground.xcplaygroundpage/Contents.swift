@@ -1,15 +1,7 @@
 import Foundation
 
-let arr1 = [Int](0...1000000)
-let arr2 = ContiguousArray<Int>(0...1000000)
-var start: CFAbsoluteTime, time: CFAbsoluteTime
+let arr = [72, 44, 39, nil, -1, 0, 99]
 
-start = CFAbsoluteTimeGetCurrent()
-_ = arr1.reduce(0, +)
-time = CFAbsoluteTimeGetCurrent() - start
-print("Regular array took ", String(format: "%.3f", time), " seconds")
+var lazyArray = arr.lazy.flatMap({ $0 }).filter({ $0 > 0 })
 
-start = CFAbsoluteTimeGetCurrent()
-_ = arr2.reduce(0, +)
-time = CFAbsoluteTimeGetCurrent() - start
-print("Cont. array took ", String(format: "%.3f", time), " seconds")
+print(Array(lazyArray))
