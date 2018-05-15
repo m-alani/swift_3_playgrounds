@@ -6,17 +6,19 @@
 
 import Foundation
 
-func fizzBuzz(_ n: Int) -> [String] {
-  var output = [String]()
-  guard n > 0 else { return output }
-  for i in 1...n {
-    var current = String()
-    if i % 3 == 0 { current.append("Fizz") }
-    if i % 5 == 0 { current.append("Buzz") }
-    if current.count == 0 { current.append(String(i)) }
-    output.append(current)
-  }
-  return output
+func groupAnagrams(_ strs: [String]) -> [[String]] {
+    var words = [String : [String]]()
+    
+    for str in strs {
+        let sorted = String(str.sorted())
+        if words[sorted] == nil {
+            words[sorted] = [str]
+        } else {
+            words[sorted]?.append(str)
+        }
+    }
+    
+    return Array(words.values)
 }
 
-print(fizzBuzz(15))
+print(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
