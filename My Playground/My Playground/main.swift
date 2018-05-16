@@ -6,19 +6,24 @@
 
 import Foundation
 
-func groupAnagrams(_ strs: [String]) -> [[String]] {
-    var words = [String : [String]]()
-    
-    for str in strs {
-        let sorted = String(str.sorted())
-        if words[sorted] == nil {
-            words[sorted] = [str]
-        } else {
-            words[sorted]?.append(str)
-        }
-    }
-    
-    return Array(words.values)
+public class TreeNode {
+  public var val: Int
+  public var left: TreeNode?
+  public var right: TreeNode?
+  public init(_ val: Int) {
+    self.val = val
+    self.left = nil
+    self.right = nil
+  }
 }
 
-print(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
+var sum = 0
+
+func convertBST(_ root: TreeNode?) -> TreeNode? {
+  guard let node = root else { return nil }
+  _ = convertBST(node.right)
+  sum += node.val
+  node.val = sum
+  _ = convertBST(node.left)
+  return root
+}
