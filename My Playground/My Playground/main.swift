@@ -6,24 +6,13 @@
 
 import Foundation
 
-public class TreeNode {
-  public var val: Int
-  public var left: TreeNode?
-  public var right: TreeNode?
-  public init(_ val: Int) {
-    self.val = val
-    self.left = nil
-    self.right = nil
+func canConstruct(_ ransomNote: String, _ magazine: String) -> Bool {
+  var letters = [Character](magazine)
+  for letter in ransomNote {
+    guard let index = letters.index(of: letter) else { return false }
+    letters.remove(at: index)
   }
+  return true
 }
 
-var sum = 0
-
-func convertBST(_ root: TreeNode?) -> TreeNode? {
-  guard let node = root else { return nil }
-  _ = convertBST(node.right)
-  sum += node.val
-  node.val = sum
-  _ = convertBST(node.left)
-  return root
-}
+print(canConstruct("aa", "abba"))
