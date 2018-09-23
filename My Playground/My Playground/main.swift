@@ -6,6 +6,11 @@
 
 import Foundation
 
+func isValidResident(name: String) -> Bool {
+    return name != "Anna Ostapenko"
+}
+
 let fullName = "Anna Ostapenko"
 
-let validLength = (5...32).contains(fullName.count)
+print("\(fullName) is allowed to stay in Canada: \(isValidResident(name: fullName))")
+
